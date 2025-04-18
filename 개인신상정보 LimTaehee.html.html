@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>개인 신상 정보 입력</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f5f5f5;
+    }
+
+    .form-container {
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 20px;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    td {
+      padding: 10px;
+      vertical-align: top;
+    }
+
+    td.label {
+      width: 25%;
+      font-weight: bold;
+      text-align: right;
+    }
+
+    td.input {
+      width: 75%;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="file"],
+    input[type="date"],
+    textarea,
+    select {
+      width: 95%;
+      padding: 6px;
+      border: 1px solid #aaa;
+      border-radius: 4px;
+    }
+
+    .inline-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .inline-group label {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #custom-domain {
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h2>개인 신상 정보 입력</h2>
+    <form action="#" method="post" enctype="multipart/form-data">
+      <table>
+        <tr>
+          <td class="label"><label for="name">이름</label></td>
+          <td class="input"><input type="text" id="name" name="name" required></td>
+        </tr>
+
+        <tr>
+          <td class="label"><label for="birth">생년월일</label></td>
+          <td class="input"><input type="date" id="birth" name="birth"></td>
+        </tr>
+
+        <tr>
+          <td class="label"><label for="password">비밀번호</label></td>
+          <td class="input"><input type="password" id="password" name="password" required></td>
+        </tr>
+
+        <tr>
+          <td class="label">성별</td>
+          <td class="input">
+            <div class="inline-group">
+              <label><input type="radio" name="gender" value="남자"> 남자</label>
+              <label><input type="radio" name="gender" value="여자"> 여자</label>
+              <label><input type="radio" name="gender" value="기타"> 기타</label>
+              <label><input type="radio" name="gender" value="비공개"> 비공개</label>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="label">취미</td>
+          <td class="input">
+            <div class="inline-group">
+              <label><input type="checkbox" name="hobby" value="영화감상"> 영화감상</label>
+              <label><input type="checkbox" name="hobby" value="게임"> 게임</label>
+              <label><input type="checkbox" name="hobby" value="음악"> 음악</label>
+              <label><input type="checkbox" name="hobby" value="독서"> 독서</label>
+              <label><input type="checkbox" name="hobby" value="운동"> 운동</label>
+              <label><input type="checkbox" name="hobby" value="요리"> 요리</label>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td class="label"><label for="file">파일 첨부</label></td>
+          <td class="input"><input type="file" id="file" name="file"></td>
+        </tr>
+
+        <tr>
+          <td class="label"><label for="email-id">이메일</label></td>
+          <td class="input">
+            <div class="inline-group">
+              <input type="text" id="email-id" name="email-id" placeholder="이메일 아이디">
+              <span>@</span>
+              <select id="email-domain" name="email-domain">
+                <option value="gmail.com">gmail.com</option>
+                <option value="naver.com">naver.com</option>
+                <option value="daum.net">daum.net</option>
+                <option value="yahoo.com">yahoo.com</option>
+                <option value="">직접 입력</option>
+              </select>
+            </div>
+            <input type="text" id="custom-domain" name="custom-domain" placeholder="직접 입력 도메인" style="display:none;">
+          </td>
+        </tr>
+
+        <tr>
+          <td class="label"><label for="intro">자기소개</label></td>
+          <td class="input"><textarea id="intro" name="intro" rows="4" placeholder="자기소개를 입력하세요..."></textarea></td>
+        </tr>
+      </table>
+
+      <button type="submit">확인</button>
+    </form>
+  </div>
+
+  <script>
+    const domainSelect = document.getElementById('email-domain');
+    const customDomainInput = document.getElementById('custom-domain');
+
+    domainSelect.addEventListener('change', function () {
+      customDomainInput.style.display = this.value === "" ? 'block' : 'none';
+    });
+  </script>
+
+</body>
+</html>
