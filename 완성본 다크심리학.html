@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>다크 심리학 MBTI 테스트</title>
+    <style>
+        :root {
+            --dark-bg: #121212;
+            --darker-bg: #0a0a0a;
+            --dark-text: #e0e0e0;
+            --accent: #8b0000;
+            --secondary-accent: #4a4a4a;
+            --highlight: #ff4444;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 1px solid var(--accent);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle, transparent 20%, var(--dark-bg) 70%, var(--dark-bg) 100%);
+            opacity: 0.7;
+            z-index: -1;
+        }
+        
+        h1 {
+            color: var(--highlight);
+            font-size: 2.5rem;
+            margin: 0;
+            text-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+            animation: pulse 3s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { text-shadow: 0 0 10px rgba(255, 68, 68, 0.5); }
+            50% { text-shadow: 0 0 20px rgba(255, 68, 68, 0.8); }
+            100% { text-shadow: 0 0 10px rgba(255, 68, 68, 0.5); }
+        }
+        
+        .subtitle {
+            color: var(--secondary-accent);
+            font-style: italic;
+            margin-top: 10px;
+        }
+        
+        .test-container {
+            background-color: var(--darker-bg);
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            margin-bottom: 30px;
+            border: 1px solid var(--secondary-accent);
+        }
+        
+        .question {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed var(--secondary-accent);
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .question.active {
+            display: block;
+        }
+        
+        .question-text {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--highlight);
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+        
+        .option {
+            background-color: rgba(139, 0, 0, 0.2);
+            padding: 12px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        
+        .option:hover {
+            background-color: rgba(139, 0, 0, 0.4);
+            border-color: var(--accent);
+        }
+        
+        .option.selected {
+            background-color: var(--accent);
+            border-color: var(--highlight);
+            box-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        button {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        button:hover {
+            background-color: var(--highlight);
+            transform: translateY(-2px);
+        }
+        
+        button:disabled {
+            background-color: var(--secondary-accent);
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .progress-container {
+            margin-bottom: 20px;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background-color: var(--secondary-accent);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background-color: var(--highlight);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .result-container {
+            display: none;
+            background-color: var(--darker-bg);
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            margin-bottom: 30px;
+            border: 1px solid var(--secondary-accent);
+            animation: fadeIn 1s ease-in;
+        }
+        
+        .result-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .result-title {
+            color: var(--highlight);
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .result-subtitle {
+            color: var(--secondary-accent);
+            font-style: italic;
+        }
+        
+        .result-content {
+            margin-bottom: 30px;
+        }
+        
+        .result-section {
+            margin-bottom: 20px;
+        }
+        
+        .result-section h3 {
+            color: var(--highlight);
+            border-bottom: 1px solid var(--secondary-accent);
+            padding-bottom: 5px;
+        }
+        
+        .mbti-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .mbti-type {
+            background-color: rgba(139, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+        
+        .mbti-type:hover {
+            background-color: rgba(139, 0, 0, 0.4);
+            border-color: var(--accent);
+        }
+        
+        .mbti-type.yours {
+            background-color: var(--accent);
+            border-color: var(--highlight);
+            box-shadow: 0 0 15px rgba(255, 68, 68, 0.5);
+            transform: scale(1.05);
+        }
+        
+        .mbti-type .type {
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .mbti-type .description {
+            font-size: 0.9rem;
+            color: var(--secondary-accent);
+        }
+        
+        .compatibility {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
+        }
+        
+        .compat-box {
+            width: 45%;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .good {
+            background-color: rgba(0, 100, 0, 0.2);
+            border: 1px solid darkgreen;
+        }
+        
+        .bad {
+            background-color: rgba(100, 0, 0, 0.2);
+            border: 1px solid darkred;
+        }
+        
+        .compat-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--highlight);
+        }
+        
+        .restart-btn {
+            display: block;
+            margin: 30px auto 0;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+        }
+        
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+            border-bottom: 1px dotted var(--secondary-accent);
+        }
+        
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: var(--darker-bg);
+            color: var(--dark-text);
+            text-align: center;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            border: 1px solid var(--accent);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .mbti-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .compatibility {
+                flex-direction: column;
+            }
+            
+            .compat-box {
+                width: 100%;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>다크 심리학 MBTI 테스트</h1>
+            <p class="subtitle">당신의 어두운 면을 발견하세요...</p>
+        </header>
+        
+        <div class="test-container" id="testContainer">
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress" id="progressBar"></div>
+                </div>
+                <div id="progressText">질문 1/15</div>
+            </div>
+            
+            <div class="question active" id="question1">
+                <div class="question-text">1. 누군가 나를 화나게 했을 때, 나는...</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(1, 'a')">즉시 복수할 방법을 계획한다. 기다림이 복수를 더 달콤하게 만든다.</div>
+                    <div class="option" onclick="selectOption(1, 'b')">상대의 약점을 분석해 나중에 사용할 때를 기다린다.</div>
+                    <div class="option" onclick="selectOption(1, 'c')">감정을 통제하려 노력하지만, 속으로는 분노가 끓어오른다.</div>
+                    <div class="option" onclick="selectOption(1, 'd')">직접적인 대면을 피하지만, 소셜 미디어에서 은근히 공격한다.</div>
+                </div>
+            </div>
+            
+            <div class="question" id="question2">
+                <div class="question-text">2. 권력을 얻기 위해서라면...</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(2, 'a')">필요한 경우 다른 사람을 희생시키는 것도 마다하지 않는다.</div>
+                    <div class="option" onclick="selectOption(2, 'b')">사람들의 감정을 조종하여 원하는 것을 얻을 것이다.</div>
+                    <div class="option" onclick="selectOption(2, 'c')">규칙을 준수하지만, 시스템의 허점을 교묘히 이용한다.</div>
+                    <div class="option" onclick="selectOption(2, 'd')">공정한 방법으로만 권력을 얻으려 노력한다.</div>
+                </div>
+            </div>
+            
+            <div class="question" id="question3">
+                <div class="question-text">3. 다른 사람의 비밀을 알게 되었을 때, 나는...</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(3, 'a')">즉시 유리한 상황에 사용한다.</div>
+                    <div class="option" onclick="selectOption(3, 'b')">미래에 유용할 때까지 비밀로 간직한다.</div>
+                    <div class="option" onclick="selectOption(3, 'c')">도덕적 고민을 하겠지만, 결국 유용하게 사용할 것이다.</div>
+                    <div class="option" onclick="selectOption(3, 'd')">비밀을 지키려 노력하지만, 실수로 누설할 가능성이 있다.</div>
+                </div>
+            </div>
+            
+            <div class="question" id="question4">
+                <div class="question-text">4. 사회적 규범에 대해 어떻게 생각하는가?</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(4, 'a')">내 목적을 달성하는 데 방해되는 장애물일 뿐이다.</div>
+                    <div class="option" onclick="selectOption(4, 'b')">다른 사람들을 통제하기 위한 도구로 유용하다.</div>
+                    <div class="option" onclick="selectOption(4, 'c')">대체로 따르지만, 필요시 무시할 수 있다.</div>
+                    <div class="option" onclick="selectOption(4, 'd')">사회의 질서를 유지하는 데 중요하다고 믿는다.</div>
+                </div>
+            </div>
+            
+            <div class="question" id="question5">
+                <div class="question-text">5. 실패한 프로젝트에 대한 책임이 있을 때, 나는...</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(5, 'a')">누군가를 희생양으로 만들어 책임을 전가한다.</div>
+                    <div class="option" onclick="selectOption(5, 'b')">설득력 있는 변명을 준비하여 책임을 최소화한다.</div>
+                    <div class="option" onclick="selectOption(5, 'c')">부분적인 책임만 인정하며 상황을 호도한다.</div>
+                    <div class="option" onclick="selectOption(5, 'd')">책임을 지지만 속으로는 불만이 가득하다.</div>
+                </div>
+            </div>
+            
+            <div class="question" id="question6">
+                <div class="question-text">6. 동료가 내 아이디어를 가로챈 경우, 나는...</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(6, 'a')">공개적으로 그들의 신뢰성을 무너뜨릴 방법을 찾는다.</div>
+                    <div class="option" onclick="selectOption(6, 'b')">더 나은 아이디어로 그들을 압도하며 은근히 무시한다.</div>
+                    <div class="option" onclick="selectOption(6, 'c')">상사에게 정중하지만 확실하게 문제를 제기한다.</div>
+                    <div class="option" onclick="selectOption(6, 'd')">직접적으로 대면하지만, 이후 관계가 어색해질 것을 우려한다.</div>
+                </div>
+            </div>
+            
+            <div class="question" id="question7">
+                <div class="question-text">7. 약점을 보이는 사람을 보면...</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(7, 'a')">그 약점을 이용할 기회로 본다.</div>
+                    <div class="option" onclick="selectOption(7, 'b')">그들이 나에게 의존하게 만들어 통제한다.</div>
+                    <div class="option" onclick="selectOption(7, 'c')">도움을 주는 척 하면서 실제로는 이득을 얻는다.</div>
+                    <div class="option" onclick="selectOption(7, 'd')">진심으로 도우려 하지만, 때로는 약점을 이용하고 싶은 유혹을 느낀다.</div>
+                </div>
+            </div>
+            
+            <div class="question" id="question8">
+                <div class="question-text">8. "목적은 수단을 정당화한다"는 말에 대해...</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(8, 'a')">완전히 동의한다. 성공이 모든 것을 정당화한다.</div>
+                    <div class="option" onclick="selectOption(8, 'b')">대체로 동의하지만, 리스크는 계산해야 한다.</div>
+                    <div class="option" onclick="selectOption(8, 'c')">경우에 따라 다르지만, 대부분의 상황에서는 맞다고 본다.</div>
+                    <div class="option" onclick="selectOption(8, 'd')">도덕적 문제가 있지만, 때로는 불가피하다.</div>
+                </div>
+            </div>
+            
+            <div class="question" id="question9">
+                <div class="question-text">9. 누군가를 조종해야 할 때, 나는...</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(9, 'a')">두려움을 이용하는 것이 가장 효과적이다.</div>
+                    <div class="option" onclick="selectOption(9, 'b')">그들의 감정과 욕망을 이해하고 그것을 활용한다.</div>
+                    <div class="option" onclick="selectOption(9, 'c')">논리와 이성을 통해 설득하려 노력한다.</div>
+                    <div class="option" onclick="selectOption(9, 'd')">보상과 칭찬을 통해 동기를 부여한다.</div>
+                </div>
+            </div>
+            
+            <div class="question" id="question10">
+                <div class="question-text">10. 내가 누군가에게 상처를 주었을 때, 나는...</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(10, 'a')">그들의 반응을 관찰하며 흥미롭게 여긴다.</div>
+                    <div class="option" onclick="selectOption(10, 'b')">필요한 행동이었다고 합리화한다.</div>
+                    <div class="option" onclick="selectOption(10, 'c')">후회는 하지만, 필요한 선택이었다고 생각한다.</div>
+                    <div class="option" onclick="selectOption(10, 'd')">깊은 죄책감을 느끼고 사과한다.</div>
+                </div>
+            </div>
+            
+            <div class="question" id="question11">
+                <div class="question-text">11. 사회에서 성공하기 위해서는...</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(11, 'a')">무자비함이 필수적이다. 친절함은 약점이다.</div>
+                    <div class="option" onclick="selectOption(11, 'b')">표면적인 친절함 뒤에 냉철한 계산이 필요하다.</div>
+                    <div class="option" onclick="selectOption(11, 'c')">적당한 친절과 적당한 냉철함의 균형이 중요하다.</div>
+                    <div class="option" onclick="selectOption(11, 'd')">진정성 있는 관계가 장기적으로 더 유리하다.</div>
+                </div>
+            </div>
+            
+            <div class="question" id="question12">
+                <div class="question-text">12. 다른 사람들의 실수를 보면...</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(12, 'a')">즉시 그 실수를 이용할 방법을 생각한다.</div>
+                    <div class="option" onclick="selectOption(12, 'b')">미래에 사용할 수 있도록 기록해 둔다.</div>
+                    <div class="option" onclick="selectOption(12, 'c')">도움이 될 조언을 주지만, 그들에게 빚을 지게 만든다.</div>
+                    <div class="option" onclick="selectOption(12, 'd')">자신도 그런 실수를 할 수 있으므로 너그럽게 봐준다.</div>
+                </div>
+            </div>
+            
+            <div class="question" id="question13">
+                <div class="question-text">13. 나의 가장 큰 강점은...</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(13, 'a')">두려움 없이 필요한 일을 할 수 있는 능력</div>
+                    <div class="option" onclick="selectOption(13, 'b')">사람들을 정확히 읽고 조종할 수 있는 능력</div>
+                    <div class="option" onclick="selectOption(13, 'c')">위기 상황에서도 냉정함을 유지하는 능력</div>
+                    <div class="option" onclick="selectOption(13, 'd')">어려운 상황에서도 도덕적 기준을 유지하는 능력</div>
+                </div>
+            </div>
+            
+            <div class="question" id="question14">
+                <div class="question-text">14. "신뢰"에 대해 어떻게 생각하는가?</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(14, 'a')">약점을 보이는 것일 뿐이다. 신뢰는 배신을 초래한다.</div>
+                    <div class="option" onclick="selectOption(14, 'b')">다른 사람들이 나를 신뢰하게 만드는 것은 유용하지만, 내가 그들을 신뢰하는 것은 아니다.</div>
+                    <div class="option" onclick="selectOption(14, 'c')">제한적으로만 허용할 가치가 있다.</div>
+                    <div class="option" onclick="selectOption(14, 'd')">건강한 관계를 위한 필수 요소이다.</div>
+                </div>
+            </div>
+            
+            <div class="question" id="question15">
+                <div class="question-text">15. 내 인생의 모토는...</div>
+                <div class="options">
+                    <div class="option" onclick="selectOption(15, 'a')">"살아남는 자가 강한 자다."</div>
+                    <div class="option" onclick="selectOption(15, 'b')">"지혜로운 자가 세상을 지배한다."</div>
+                    <div class="option" onclick="selectOption(15, 'c')">"현명한 선택이 성공을 이끈다."</div>
+                    <div class="option" onclick="selectOption(15, 'd')">"선함이 결국 승리한다."</div>
+                </div>
+            </div>
+            
+            <div class="navigation">
+                <button id="prevBtn" onclick="prevQuestion()" disabled>이전</button>
+                <button id="nextBtn" onclick="nextQuestion()" disabled>다음</button>
+            </div>
+        </div>
+        
+        <div class="result-container" id="resultContainer">
+            <div class="result-header">
+                <h2 class="result-title" id="resultTitle">당신의 다크 MBTI 결과</h2>
+                <p class="result-subtitle" id="resultSubtitle">어둠 속의 당신을 발견하세요...</p>
+            </div>
+            
+            <div class="result-content">
+                <div class="result-section">
+                    <h3>당신의 다크 MBTI 유형: <span id="mbtiType"></span></h3>
+                    <p id="typeDescription"></p>
+                </div>
+                
+                <div class="result-section">
+                    <h3>주요 특징</h3>
+                    <div id="typeTraits"></div>
+                </div>
+                
+                <div class="result-section">
+                    <h3>어두운 면의 강도 <span class="tooltip">ⓘ<span class="tooltiptext">0-100점 사이의 점수로, 점수가 높을수록 어두운 성향이 강함을 나타냅니다</span></span></h3>
+                    <div id="darknessScore"></div>
+                </div>
+                
+                <div class="result-section">
+                    <h3>MBTI 유형별 다크 성향 순위</h3>
+                    <div class="mbti-grid" id="mbtiGrid">
+                        <!-- MBTI 타입들이 여기에 동적으로 채워집니다 -->
+                    </div>
+                </div>
+                
+                <div class="result-section">
+                    <h3>궁합 분석</h3>
+                    <div class="compatibility">
+                        <div class="compat-box good">
+                            <div class="compat-title">잘 맞는 유형</div>
+                            <div id="goodMatch"></div>
+                        </div>
+                        <div class="compat-box bad">
+                            <div class="compat-title">안 맞는 유형</div>
+                            <div id="badMatch"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="result-section">
+                    <h3>전체 MBTI 다크 성향 특징</h3>
+                    <div id="allTypesInfo"></div>
+                </div>
+            </div>
+            
+            <button class="restart-btn" onclick="restartTest()">테스트 다시하기</button>
+        </div>
+    </div>
+
+    <script>
+        // 현재 질문 번호
+        let currentQuestion = 1;
+        const totalQuestions = 15;
+        
+        // 선택한 옵션 저장
+        const answers = {};
+        
+        // MBTI 유형별 설명 데이터
+        const mbtiData = {
+            "INTJ": {
+                name: "마스터마인드",
+                darkName: "암흑의 전략가",
+                description: "당신은 냉철한 계산과 장기적인 전략을 세우는 데 능한 유형입니다. 감정보다는 논리와 효율성을 중시하며, 목표 달성을 위해 필요한 경우 무자비한 결정도 내릴 수 있습니다.",
+                traits: [
+                    "✔️ 냉철한 논리와 계산 능력",
+                    "✔️ 장기적인 복수 계획 가능",
+                    "✔️ 감정 조종보다는 시스템 활용 선호",
+                    "✔️ 목적 달성을 위한 무자비함",
+                    "✔️ 약점을 철저히 분석하는 성향"
+                ],
+                darkness: 85,
+                goodMatch: "ENTP, ISTP",
+                badMatch: "ESFJ, ISFP"
+            },
+            "INTP": {
+                name: "논리적인 사색가",
+                darkName: "실험적인 관찰자",
+                description: "당신은 사회적 규범을 분석하고 테스트하는 것을 즐기는 유형입니다. 도덕적 기준이 유연하며, 인간 관계를 하나의 실험으로 보는 경향이 있습니다.",
+                traits: [
+                    "✔️ 사회적 규범에 대한 도전 정신",
+                    "✔️ 인간 관계를 실험으로 간주",
+                    "✔️ 감정보다는 호기심으로 행동",
+                    "✔️ 복잡한 시스템 조작 능력",
+                    "✔️ 전통적 도덕관에 대한 회의"
+                ],
+                darkness: 75,
+                goodMatch: "ENTJ, ISTJ",
+                badMatch: "ESFJ, ENFJ"
+            },
+            "ENTJ": {
+                name: "대담한 통솔자",
+                darkName: "무자비한 지배자",
+                description: "당신은 목표 달성을 위해 어떠한 장애물도 제거할 준비가 된 유형입니다. 권력과 통제를 중시하며, 약자를 보호하기보다는 강자를 더 강하게 만드는 것을 선호합니다.",
+                traits: [
+                    "✔️ 강력한 지도력과 통제 욕구",
+                    "✔️ 목적을 위한 수단 가리지 않음",
+                    "✔️ 약점을 보이는 자에 대한 무자비함",
+                    "✔️ 효율성을 위한 인간적 고려 생략",
+                    "✔️ 장애물 제거에 대한 결단력"
+                ],
+                darkness: 90,
+                goodMatch: "INTJ, ESTP",
+                badMatch: "INFP, ISFJ"
+            },
+            "ENTP": {
+                name: "뜨거운 논쟁을 즐기는 변론가",
+                darkName: "기만의 달인",
+                description: "당신은 말재주가 뛰어나고 설득력이 강한 유형입니다. 진실과 거짓의 경계를 유연하게 넘나들며, 상대방을 자신의 논리로 몰아넣는 데 능합니다.",
+                traits: [
+                    "✔️ 탁월한 언어적 조작 능력",
+                    "✔️ 논리적 허점 찾기에 능함",
+                    "✔️ 규칙을 재해석하는 창의성",
+                    "✔️ 상대의 약점을 언어로 공격",
+                    "✔️ 진실과 거짓의 경계 모호화"
+                ],
+                darkness: 80,
+                goodMatch: "INTJ, INFJ",
+                badMatch: "ISFJ, ESFJ"
+            },
+            "INFJ": {
+                name: "선의의 옹호자",
+                darkName: "숨은 조종자",
+                description: "당신은 사람들의 마음을 읽고 감정을 조종하는 데 능한 유형입니다. 선의의 가면 뒤에 숨은 냉철한 계산이 있으며, 타인의 약점을 이용해 '더 큰 선'을 이루려 합니다.",
+                traits: [
+                    "✔️ 타인의 감정 읽기 및 조종",
+                    "✔️ 선의적 동기로 악행 정당화",
+                    "✔️ 장기적인 영향력 행사 계획",
+                    "✔️ 도덕적 우월감을 통한 통제",
+                    "✔️ 조용하지만 강력한 복수심"
+                ],
+                darkness: 70,
+                goodMatch: "ENFJ, INFP",
+                badMatch: "ESTP, ISTP"
+            },
+            "INFP": {
+                name: "열정적인 중재자",
+                darkName: "상처받은 이상주의자",
+                description: "당신은 깊은 내적 신념을 가진 유형으로, 이 신념이 훼손될 경우 극단적인 반응을 보일 수 있습니다. 상처받은 이상주의자는 때로 가장 무서운 복수자를 만들기도 합니다.",
+                traits: [
+                    "✔️ 신념이 훼손될 경우 극단적 반응",
+                    "✔️ 내적 가치관에 대한 강박적 집착",
+                    "✔️ 상처에 대한 장기적인 원한",
+                    "✔️ 수동적 공격성 발현",
+                    "✔️ 도덕적 우월감을 통한 공격"
+                ],
+                darkness: 65,
+                goodMatch: "ENFJ, INFJ",
+                badMatch: "ESTJ, ENTJ"
+            },
+            "ENFJ": {
+                name: "정의로운 사회운동가",
+                darkName: "광신적 지도자",
+                description: "당신은 강한 카리스마로 사람들을 이끄는 유형입니다. 자신의 신념이 절대적 진리라고 믿으며, 이 신념을 위해 타인의 자유를 제한하는 것을 정당화할 수 있습니다.",
+                traits: [
+                    "✔️ 강력한 카리스마와 설득력",
+                    "✔️ 추종자들의 헌신적 지지 확보",
+                    "✔️ 신념을 위한 폭력 정당화",
+                    "✔️ 비판자에 대한 무자비한 탄압",
+                    "✔️ 집단적 광신 조성 능력"
+                ],
+                darkness: 75,
+                goodMatch: "INFP, INFJ",
+                badMatch: "ISTP, INTP"
+            },
+            "ENFP": {
+                name: "재기발랄한 활동가",
+                darkName: "혼란의 주도자",
+                description: "당신은 규범을 거부하고 자유를 추구하는 유형입니다. 기존 체계를 무너뜨리는 것을 즐기며, 이 과정에서 발생하는 혼란과 파괴에 대해 큰 죄의식을 느끼지 않습니다.",
+                traits: [
+                    "✔️ 기존 질서에 대한 도전 정신",
+                    "✔️ 규칙 파괴에서 오는 쾌감 추구",
+                    "✔️ 혼란을 통한 영향력 행사",
+                    "✔️ 파괴적 행동에 대한 책임 회피",
+                    "✔️ 충동적인 반사회적 행동 가능성"
+                ],
+                darkness: 60,
+                goodMatch: "ENTP, INTJ",
+                badMatch: "ISTJ, ESTJ"
+            },
+            "ISTJ": {
+                name: "청렴결백한 논리주의자",
+                darkName: "무감정한 집행자",
+                description: "당신은 규칙과 질서를 중시하는 유형으로, 이러한 규칙을 집행하는 데 있어서 어떠한 인간적 고려도 배제할 수 있습니다. '법대로'라는 명분 아래 잔인함을 정당화합니다.",
+                traits: [
+                    "✔️ 규칙 준수에 대한 강박적 집착",
+                    "✔️ 인간적 고려 없이 규칙 적용",
+                    "✔️ 권위에 대한 무조건적 복종",
+                    "✔️ 비인간적 행위도 규칙이라면 수행",
+                    "✔️ 개인적 판단보다는 규정에 의존"
+                ],
+                darkness: 70,
+                goodMatch: "ESTJ, ISFJ",
+                badMatch: "ENFP, INFP"
+            },
+            "ISFJ": {
+                name: "용감한 수호자",
+                darkName: "병적인 보호자",
+                description: "당신은 소중히 여기는 사람이나 가치를 보호하기 위해 극단적인 행동도 서슴지 않는 유형입니다. 보호의 이름으로 통제와 조종을 정당화하며, 위협을 느끼면 잔인해질 수 있습니다.",
+                traits: [
+                    "✔️ 소중한 것에 대한 병적 집착",
+                    "✔️ 보호를 명분으로 한 통제",
+                    "✔️ 위협에 대한 과잉 반응",
+                    "✔️ 배신에 대한 과도한 복수 욕구",
+                    "✔️ 희생자 의식과 자기 정당화"
+                ],
+                darkness: 65,
+                goodMatch: "ESFJ, ISTJ",
+                badMatch: "ENTP, ENTP"
+            },
+            "ESTJ": {
+                name: "엄격한 관리자",
+                darkName: "독재적인 통제자",
+                description: "당신은 효율과 질서를 위해 개인의 자유를 억압하는 것을 정당화하는 유형입니다. 자신의 방식이 최선이라고 믿으며, 이에 동의하지 않는 자에 대해 무자비하게 대응합니다.",
+                traits: [
+                    "✔️ 권위적이고 독재적인 성향",
+                    "✔️ 비효율적이라고 판단되는 것에 대한 혐오",
+                    "✔️ 반대자에 대한 무자비한 진압",
+                    "✔️ 집단적 동조 압력 활용",
+                    "✔️ 개인보다 체제 유지 중시"
+                ],
+                darkness: 80,
+                goodMatch: "ISTJ, ENTJ",
+                badMatch: "INFP, ENFP"
+            },
+            "ESFJ": {
+                name: "사교적인 외교관",
+                darkName: "사회적 조작자",
+                description: "당신은 사회적 관계를 자신의 이익을 위해 교묘히 이용하는 유형입니다. 집단 내에서의 평판과 지위를 중시하며, 이를 위해 소문과 인간관계를 전략적으로 활용합니다.",
+                traits: [
+                    "✔️ 사회적 지위에 대한 강한 욕구",
+                    "✔️ 소문과 평판을 통한 영향력 행사",
+                    "✔️ 집단 따돌림과 배제의 달인",
+                    "✔️ 표면적 친절 뒤의 계산적 행동",
+                    "✔️ 사회적 규범을 무기로 사용"
+                ],
+                darkness: 70,
+                goodMatch: "ISFJ, ESTJ",
+                badMatch: "INTP, INTJ"
+            },
+            "ISTP": {
+                name: "만능 재주꾼",
+                darkName: "냉혈한 기술자",
+                description: "당신은 위험과 자극을 추구하며, 도덕적 고려 없이 기술과 능력을 활용하는 유형입니다. 문제 해결에 대한 집착이 강하며, 이 과정에서 발생하는 부작용에 대해 무감각할 수 있습니다.",
+                traits: [
+                    "✔️ 위험한 기술 실험에 대한 관심",
+                    "✔️ 결과만을 중시하는 냉혈한 태도",
+                    "✔️ 도덕적 고려 없이 능력 활용",
+                    "✔️ 위기 상황에서의 냉정함",
+                    "✔️ 금지된 것에 대한 도전 정신"
+                ],
+                darkness: 75,
+                goodMatch: "ESTP, INTJ",
+                badMatch: "ENFJ, INFJ"
+            },
+            "ISFP": {
+                name: "호기심 많은 예술가",
+                darkName: "반항적인 방랑자",
+                description: "당신은 규칙과 권위에 강한 반감을 가진 유형입니다. 자신의 방식대로 살아가며, 이를 방해하는 것에 대해 공격적으로 반응할 수 있습니다. 충동적인 파괴 행동으로 이어질 수도 있습니다.",
+                traits: [
+                    "✔️ 권위와 규칙에 대한 강한 반감",
+                    "✔️ 억압에 대한 폭발적 반응",
+                    "✔️ 충동적인 파괴 행동 가능성",
+                    "✔️ 사회적 기대에 대한 거부감",
+                    "✔️ 자기 파괴적 성향"
+                ],
+                darkness: 60,
+                goodMatch: "ESFP, INFP",
+                badMatch: "ESTJ, ENTJ"
+            },
+            "ESTP": {
+                name: "모험을 즐기는 사업가",
+                darkName: "무모한 도박사",
+                description: "당신은 위험을 즐기고 즉각적인 쾌감을 추구하는 유형입니다. 결과보다는 과정의 스릴을 중시하며, 이로 인해 자신과 타인을 위험에 빠뜨릴 수 있습니다. 책임 회피 성향이 강합니다.",
+                traits: [
+                    "✔️ 위험 감수에서 오는 쾌감 추구",
+                    "✔️ 충동적인 결정과 행동",
+                    "✔️ 결과에 대한 책임 회피",
+                    "✔️ 도덕적 고려 없이 위험 감수",
+                    "✔️ 타인을 위험에 빠뜨리는 것에 대한 무감각"
+                ],
+                darkness: 85,
+                goodMatch: "ISTP, ENTJ",
+                badMatch: "INFJ, ISFJ"
+            },
+            "ESFP": {
+                name: "자유로운 영혼의 연예인",
+                darkName: "이기적인 유혹자",
+                description: "당신은 주목과 관심을 갈구하며, 이를 얻기 위해 수단과 방법을 가리지 않는 유형입니다. 즐거움과 자극을 최우선으로 여기며, 이로 인해 타인을 이용하거나 상처주는 것에 대해 큰 죄의식을 느끼지 않습니다.",
+                traits: [
+                    "✔️ 관심과 주목에 대한 갈망",
+                    "✔️ 타인을 즐거움을 위한 도구로 간주",
+                    "✔️ 책임 회피와 변명의 달인",
+                    "✔️ 충동적인 쾌락 추구",
+                    "✔️ 사회적 이미지 관리에 능숙"
+                ],
+                darkness: 65,
+                goodMatch: "ISFP, ENFP",
+                badMatch: "INTJ, ISTJ"
+            }
+        };
+        
+        // 질문 이동 함수
+        function goToQuestion(questionNum) {
+            // 현재 질문 숨기기
+            document.getElementById(`question${currentQuestion}`).classList.remove('active');
+            
+            // 새 질문 보이기
+            document.getElementById(`question${questionNum}`).classList.add('active');
+            currentQuestion = questionNum;
+            
+            // 진행 상태 업데이트
+            updateProgress();
+            
+            // 버튼 상태 업데이트
+            document.getElementById('prevBtn').disabled = (currentQuestion === 1);
+            document.getElementById('nextBtn').disabled = !answers[currentQuestion];
+            
+            // 마지막 질문일 경우 버튼 텍스트 변경
+            if (currentQuestion === totalQuestions) {
+                document.getElementById('nextBtn').textContent = '결과 보기';
+            } else {
+                document.getElementById('nextBtn').textContent = '다음';
+            }
+        }
+        
+        // 다음 질문으로 이동
+        function nextQuestion() {
+            if (currentQuestion < totalQuestions) {
+                goToQuestion(currentQuestion + 1);
+            } else {
+                showResults();
+            }
+        }
+        
+        // 이전 질문으로 이동
+        function prevQuestion() {
+            if (currentQuestion > 1) {
+                goToQuestion(currentQuestion - 1);
+            }
+        }
+        
+        // 옵션 선택 함수
+        function selectOption(questionNum, option) {
+            // 모든 옵션에서 selected 클래스 제거
+            const options = document.querySelectorAll(`#question${questionNum} .option`);
+            options.forEach(opt => opt.classList.remove('selected'));
+            
+            // 선택한 옵션에 selected 클래스 추가
+            event.currentTarget.classList.add('selected');
+            
+            // 답변 저장
+            answers[questionNum] = option;
+            
+            // 다음 버튼 활성화
+            document.getElementById('nextBtn').disabled = false;
+        }
+        
+        // 진행 상태 업데이트
+        function updateProgress() {
+            const progressPercent = (currentQuestion / totalQuestions) * 100;
+            document.getElementById('progressBar').style.width = `${progressPercent}%`;
+            document.getElementById('progressText').textContent = `질문 ${currentQuestion}/${totalQuestions}`;
+        }
+        
+        // 결과 계산 함수
+        function calculateResults() {
+            // 각 MBTI 지표별 점수 초기화
+            const scores = {
+                E: 0, I: 0,
+                N: 0, S: 0,
+                T: 0, F: 0,
+                J: 0, P: 0
+            };
+            
+            // 답변에 따라 점수 부여
+            // I/E 지표
+            if (answers[1] === 'a' || answers[1] === 'b') scores.I += 2;
+            if (answers[1] === 'c' || answers[1] === 'd') scores.E += 2;
+            
+            if (answers[6] === 'a' || answers[6] === 'b') scores.I += 1;
+            if (answers[6] === 'c' || answers[6] === 'd') scores.E += 1;
+            
+            if (answers[11] === 'a' || answers[11] === 'b') scores.I += 1;
+            if (answers[11] === 'c' || answers[11] === 'd') scores.E += 1;
+            
+            // N/S 지표
+            if (answers[2] === 'a' || answers[2] === 'b') scores.N += 2;
+            if (answers[2] === 'c' || answers[2] === 'd') scores.S += 2;
+            
+            if (answers[7] === 'a' || answers[7] === 'b') scores.N += 1;
+            if (answers[7] === 'c' || answers[7] === 'd') scores.S += 1;
+            
+            if (answers[12] === 'a' || answers[12] === 'b') scores.N += 1;
+            if (answers[12] === 'c' || answers[12] === 'd') scores.S += 1;
+            
+            // T/F 지표
+            if (answers[3] === 'a' || answers[3] === 'b') scores.T += 2;
+            if (answers[3] === 'c' || answers[3] === 'd') scores.F += 2;
+            
+            if (answers[8] === 'a' || answers[8] === 'b') scores.T += 1;
+            if (answers[8] === 'c' || answers[8] === 'd') scores.F += 1;
+            
+            if (answers[13] === 'a' || answers[13] === 'b') scores.T += 1;
+            if (answers[13] === 'c' || answers[13] === 'd') scores.F += 1;
+            
+            // J/P 지표
+            if (answers[4] === 'a' || answers[4] === 'b') scores.J += 2;
+            if (answers[4] === 'c' || answers[4] === 'd') scores.P += 2;
+            
+            if (answers[9] === 'a' || answers[9] === 'b') scores.J += 1;
+            if (answers[9] === 'c' || answers[9] === 'd') scores.P += 1;
+            
+            if (answers[14] === 'a' || answers[14] === 'b') scores.J += 1;
+            if (answers[14] === 'c' || answers[14] === 'd') scores.P += 1;
+            
+            // MBTI 유형 결정
+            let mbti = '';
+            mbti += scores.I > scores.E ? 'I' : 'E';
+            mbti += scores.N > scores.S ? 'N' : 'S';
+            mbti += scores.T > scores.F ? 'T' : 'F';
+            mbti += scores.J > scores.P ? 'J' : 'P';
+            
+            return mbti;
+        }
+        
+        // 결과 표시 함수
+        function showResults() {
+            const mbtiType = calculateResults();
+            const resultData = mbtiData[mbtiType];
+            
+            // 테스트 컨테이너 숨기기
+            document.getElementById('testContainer').style.display = 'none';
+            
+            // 결과 컨테이너 보이기
+            document.getElementById('resultContainer').style.display = 'block';
+            
+            // 결과 데이터 채우기
+            document.getElementById('mbtiType').textContent = `${mbtiType} - ${resultData.darkName}`;
+            document.getElementById('typeDescription').textContent = resultData.description;
+            
+            // 특징 목록 채우기
+            const traitsList = resultData.traits.map(trait => `<li>${trait}</li>`).join('');
+            document.getElementById('typeTraits').innerHTML = `<ul>${traitsList}</ul>`;
+            
+            // 어두운 면 강도 표시
+            document.getElementById('darknessScore').innerHTML = `
+                <div style="background: linear-gradient(90deg, var(--accent) ${resultData.darkness}%, var(--secondary-accent) ${resultData.darkness}%); 
+                            padding: 10px; border-radius: 5px; text-align: center; font-weight: bold;">
+                    ${resultData.darkness}/100
+                </div>
+                <p>${getDarknessDescription(resultData.darkness)}</p>
+            `;
+            
+            // MBTI 그리드 채우기
+            const mbtiGrid = document.getElementById('mbtiGrid');
+            mbtiGrid.innerHTML = '';
+            
+            for (const type in mbtiData) {
+                const typeData = mbtiData[type];
+                const isYours = type === mbtiType ? ' yours' : '';
+                
+                const typeElement = document.createElement('div');
+                typeElement.className = `mbti-type${isYours}`;
+                typeElement.innerHTML = `
+                    <div class="type">${type}</div>
+                    <div class="dark-name">${typeData.darkName}</div>
+                    <div class="description">어둠 점수: ${typeData.darkness}/100</div>
+                `;
+                
+                mbtiGrid.appendChild(typeElement);
+            }
+            
+            // 궁합 정보 채우기
+            document.getElementById('goodMatch').textContent = resultData.goodMatch;
+            document.getElementById('badMatch').textContent = resultData.badMatch;
+            
+            // 전체 유형 정보 채우기
+            let allTypesInfo = '';
+            for (const type in mbtiData) {
+                const typeData = mbtiData[type];
+                allTypesInfo += `
+                    <h4>${type} - ${typeData.darkName} (어둠 점수: ${typeData.darkness}/100)</h4>
+                    <p><strong>특징:</strong> ${typeData.traits.join(', ')}</p>
+                    <p><strong>잘 맞는 유형:</strong> ${typeData.goodMatch}</p>
+                    <p><strong>안 맞는 유형:</strong> ${typeData.badMatch}</p>
+                    <hr>
+                `;
+            }
+            document.getElementById('allTypesInfo').innerHTML = allTypesInfo;
+            
+            // 결과 제목에 MBTI 유형 반영
+            document.getElementById('resultTitle').textContent = `당신의 다크 MBTI 결과: ${mbtiType}`;
+            document.getElementById('resultSubtitle').textContent = `"${resultData.darkName}" - ${resultData.name}의 어두운 면`;
+        }
+        
+        // 어두운 면 강도 설명
+        function getDarknessDescription(score) {
+            if (score >= 90) return "당신은 극도로 어두운 성향을 가지고 있습니다. 사회에서 위험인물로 분류될 수 있는 수준입니다.";
+            if (score >= 80) return "당신은 매우 강한 어두운 면을 가지고 있습니다. 목적을 위해 수단을 가리지 않는 성향이 강합니다.";
+            if (score >= 70) return "당신은 상당히 어두운 성향을 가지고 있습니다. 필요시 냉철한 결정을 내릴 수 있습니다.";
+            if (score >= 60) return "당신은 평균 이상의 어두운 면을 가지고 있습니다. 상황에 따라 어두운 면이 발현될 수 있습니다.";
+            return "당신은 비교적 약한 어두운 면을 가지고 있습니다. 일반적인 도덕적 기준을 크게 벗어나지 않습니다.";
+        }
+        
+        // 테스트 다시 시작
+        function restartTest() {
+            // 현재 질문 숨기기
+            document.getElementById(`question${currentQuestion}`).classList.remove('active');
+            
+            // 첫 질문 보이기
+            document.getElementById('question1').classList.add('active');
+            currentQuestion = 1;
+            
+            // 선택 초기화
+            const options = document.querySelectorAll('.option');
+            options.forEach(opt => opt.classList.remove('selected'));
+            
+            // 답변 초기화
+            for (let i = 1; i <= totalQuestions; i++) {
+                delete answers[i];
+            }
+            
+            // 버튼 상태 초기화
+            document.getElementById('prevBtn').disabled = true;
+            document.getElementById('nextBtn').disabled = true;
+            document.getElementById('nextBtn').textContent = '다음';
+            
+            // 진행 상태 초기화
+            updateProgress();
+            
+            // 테스트 컨테이너 보이기
+            document.getElementById('testContainer').style.display = 'block';
+            
+            // 결과 컨테이너 숨기기
+            document.getElementById('resultContainer').style.display = 'none';
+        }
+        
+        // 초기 진행 상태 업데이트
+        updateProgress();
+    </script>
+</body>
+</html>
