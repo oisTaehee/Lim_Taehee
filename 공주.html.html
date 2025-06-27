@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공주 긍정적 MBTI 성향 테스트 ✨</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Dokdo&display=swap');
+        
+        :root {
+            --primary-pink: #ffb6c1;
+            --secondary-pink: #ffc0cb;
+            --dark-pink: #db7093;
+            --light-pink: #fff0f5;
+            --gold: #ffd700;
+        }
+        
+        body {
+            font-family: 'Nanum Pen Script', cursive;
+            background-color: var(--light-pink);
+            color: #5a3d3d;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://img.freepik.com/free-vector/hand-drawn-pink-heart-pattern_23-2149025311.jpg?w=1380&t=st=1698765432~exp=1698766032~hmac=...');
+            background-size: 30%;
+            background-attachment: fixed;
+            animation: floatBackground 60s linear infinite;
+        }
+        
+        @keyframes floatBackground {
+            0% { background-position: 0 0; }
+            100% { background-position: 1000px 1000px; }
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h1 {
+            font-family: 'Dokdo', cursive;
+            font-size: 3.5rem;
+            color: var(--dark-pink);
+            text-shadow: 3px 3px 0 var(--gold);
+            margin-bottom: 10px;
+            animation: glitter 2s infinite alternate;
+        }
+        
+        @keyframes glitter {
+            0% { text-shadow: 3px 3px 0 var(--gold); }
+            100% { text-shadow: 3px 3px 10px var(--gold), -3px -3px 10px #ffffff; }
+        }
+        
+        .intro {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 3px solid var(--primary-pink);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .intro::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, var(--primary-pink), var(--light-pink), var(--primary-pink));
+            z-index: -1;
+            filter: blur(20px);
+            opacity: 0.5;
+            animation: gradientBG 8s ease infinite;
+            background-size: 200% 200%;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .test-container {
+            background-color: white;
+            border-radius: 25px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border: 4px solid var(--secondary-pink);
+            margin-bottom: 30px;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        
+        .question {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--dark-pink);
+            text-align: center;
+            animation: bounce 1s;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .option {
+            background-color: var(--light-pink);
+            border: 2px solid var(--primary-pink);
+            border-radius: 15px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .option:hover {
+            background-color: var(--primary-pink);
+            color: white;
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(219, 112, 147, 0.4);
+        }
+        
+        .option::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: 0.5s;
+        }
+        
+        .option:hover::before {
+            left: 100%;
+        }
+        
+        .option input {
+            margin-right: 10px;
+            transform: scale(1.5);
+            accent-color: var(--dark-pink);
+        }
+        
+        .btn {
+            background-color: var(--dark-pink);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 25px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            font-family: 'Nanum Pen Script', cursive;
+            display: block;
+            margin: 20px auto;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-pink);
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+        }
+        
+        .btn::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+        
+        .btn:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+        
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(20, 20);
+                opacity: 0;
+            }
+        }
+        
+        .progress-container {
+            width: 100%;
+            background-color: #f3f3f3;
+            border-radius: 20px;
+            margin: 20px 0;
+            overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        
+        .progress-bar {
+            height: 30px;
+            background: linear-gradient(90deg, var(--primary-pink), var(--dark-pink));
+            border-radius: 20px;
+            width: 0%;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-bar::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255, 255, 255, 0.3) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, transparent 75%, transparent);
+            background-size: 40px 40px;
+            animation: progressStripes 1s linear infinite;
+        }
+        
+        @keyframes progressStripes {
+            0% { background-position: 0 0; }
+            100% { background-position: 40px 0; }
+        }
+        
+        .result-container {
+            display: none;
+            background-color: white;
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border: 4px solid var(--secondary-pink);
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease;
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .result-title {
+            font-family: 'Dokdo', cursive;
+            font-size: 3rem;
+            color: var(--dark-pink);
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 0 var(--gold);
+        }
+        
+        .result-type {
+            font-size: 5rem;
+            text-align: center;
+            margin: 20px 0;
+            color: var(--dark-pink);
+            text-shadow: 3px 3px 0 var(--gold);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .result-description {
+            font-size: 1.5rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .result-details {
+            background-color: var(--light-pink);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .result-details h3 {
+            color: var(--dark-pink);
+            font-size: 2rem;
+            margin-top: 0;
+            border-bottom: 2px dashed var(--primary-pink);
+            padding-bottom: 10px;
+        }
+        
+        .result-details p {
+            font-size: 1.4rem;
+            margin: 10px 0;
+        }
+        
+        .all-types {
+            margin-top: 30px;
+        }
+        
+        .type-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .type-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            border: 2px solid var(--primary-pink);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .type-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            background-color: var(--light-pink);
+        }
+        
+        .type-card.selected {
+            background-color: var(--primary-pink);
+            color: white;
+            border-color: var(--dark-pink);
+        }
+        
+        .type-card .type {
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+        
+        .type-card .score {
+            font-size: 1.1rem;
+            color: var(--dark-pink);
+        }
+        
+        .accordion {
+            margin-top: 20px;
+        }
+        
+        .accordion-item {
+            margin-bottom: 10px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .accordion-header {
+            background-color: var(--primary-pink);
+            color: white;
+            padding: 15px;
+            cursor: pointer;
+            font-size: 1.6rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .accordion-header:hover {
+            background-color: var(--dark-pink);
+        }
+        
+        .accordion-content {
+            background-color: white;
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .accordion-content-inner {
+            padding: 15px;
+            font-size: 1.4rem;
+        }
+        
+        .accordion-item.active .accordion-content {
+            max-height: 500px;
+        }
+        
+        .crown-icon {
+            font-size: 2rem;
+            margin-left: 10px;
+            color: var(--gold);
+            animation: glitter 2s infinite alternate;
+        }
+        
+        .princess-emoji {
+            font-size: 1.5rem;
+            margin: 0 5px;
+            animation: bounce 1s infinite alternate;
+        }
+        
+        .compatibility-chart {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 1.3rem;
+        }
+        
+        .compatibility-chart th, .compatibility-chart td {
+            border: 1px solid var(--primary-pink);
+            padding: 8px;
+            text-align: center;
+        }
+        
+        .compatibility-chart th {
+            background-color: var(--primary-pink);
+            color: white;
+        }
+        
+        .compatibility-chart tr:nth-child(even) {
+            background-color: var(--light-pink);
+        }
+        
+        .compatibility-chart .good {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .compatibility-chart .average {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        
+        .compatibility-chart .poor {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .restart-btn {
+            background-color: var(--gold);
+            color: #5a3d3d;
+        }
+        
+        .restart-btn:hover {
+            background-color: #ffc107;
+        }
+        
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .floating-element {
+            position: absolute;
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.6;
+            animation: float 10s infinite linear;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.6;
+            }
+            50% {
+                opacity: 0.9;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .question {
+                font-size: 1.5rem;
+            }
+            
+            .option {
+                font-size: 1.3rem;
+                padding: 12px;
+            }
+            
+            .type-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .result-type {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements" id="floatingElements"></div>
+    
+    <div class="container">
+        <header>
+            <h1>공주 긍정적 MBTI 성향 테스트 <span class="princess-emoji">👑</span></h1>
+            <p style="font-size: 1.8rem;">당신은 어떤 공주 성향을 가지고 있나요? <span class="princess-emoji">✨</span></p>
+        </header>
+        
+        <div class="intro">
+            <p style="font-size: 1.6rem; text-align: center;">
+                환영합니다, 공주님! <span class="princess-emoji">💖</span><br>
+                이 테스트는 당신의 긍정적인 MBTI 성향을 공주 스타일로 분석해드립니다.<br>
+                15개의 재미있는 질문에 답하고, 당신의 공주 같은 성격 유형을 발견해보세요! <span class="princess-emoji">🌸</span>
+            </p>
+        </div>
+        
+        <div class="test-container" id="testContainer">
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar">0%</div>
+            </div>
+            
+            <div class="question" id="question"></div>
+            
+            <div class="options" id="options"></div>
+            
+            <button class="btn" id="nextBtn" disabled>다음 질문 <span class="princess-emoji">➡️</span></button>
+        </div>
+        
+        <div class="result-container" id="resultContainer">
+            <div class="result-title">
+                당신의 공주 MBTI 결과는... <span class="princess-emoji">🎀</span>
+            </div>
+            
+            <div class="result-type" id="resultType"></div>
+            
+            <div class="result-description" id="resultDescription"></div>
+            
+            <div class="result-details">
+                <h3><span class="princess-emoji">🔮</span> 성향 해석 <span class="princess-emoji">🔮</span></h3>
+                <div id="resultAnalysis"></div>
+            </div>
+            
+            <div class="result-details">
+                <h3><span class="princess-emoji">🌟</span> 공주 같은 특징 <span class="princess-emoji">🌟</span></h3>
+                <div id="resultTraits"></div>
+            </div>
+            
+            <div class="result-details">
+                <h3><span class="princess-emoji">💞</span> 최고의 궁합 <span class="princess-emoji">💞</span></h3>
+                <div id="resultCompatibility"></div>
+            </div>
+            
+            <div class="all-types">
+                <h3 style="text-align: center; color: var(--dark-pink); font-size: 2rem;">
+                    <span class="princess-emoji">🏆</span> 모든 MBTI 유형 순위 <span class="princess-emoji">🏆</span>
+                </h3>
+                
+                <div class="type-grid" id="allTypesGrid"></div>
+                
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>모든 유형 상세 설명 보기 <span class="princess-emoji">📚</span></span>
+                            <span>+</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-content-inner" id="allTypesDetails"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <span>MBTI 궁합 차트 보기 <span class="princess-emoji">💘</span></span>
+                            <span>+</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-content-inner" id="compatibilityChart"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="btn restart-btn" id="restartBtn">테스트 다시하기 <span class="princess-emoji">🔄</span></button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Floating elements 생성
+            createFloatingElements();
+            
+            // 테스트 질문 데이터
+            const questions = [
+                {
+                    question: "아침에 눈을 뜨면 가장 먼저 무엇을 생각하나요? <span class='princess-emoji'>🌞</span>",
+                    options: [
+                        "오늘 할 일과 계획 (E, J)",
+                        "꿈속에서 본 아름다운 풍경 (I, N)",
+                        "오늘 입을 예쁜 옷 (S, F)",
+                        "커피 한 잔의 여유 (I, T)"
+                    ]
+                },
+                {
+                    question: "공주님의 성에서 가장 좋아할 것 같은 공간은? <span class='princess-emoji'>🏰</span>",
+                    options: [
+                        "사람들과 만나는 큰 홀 (E)",
+                        "책이 가득한 비밀 도서관 (I, N)",
+                        "아름다운 정원 (S, F)",
+                        "과학과 마법을 연구하는 실험실 (T)"
+                    ]
+                },
+                {
+                    question: "마법의 요정이 한 가지 소원을 들어준다면? <span class='princess-emoji'>🧚</span>",
+                    options: [
+                        "모두가 행복한 왕국 만들기 (F)",
+                        "새로운 세계를 탐험할 수 있는 능력 (N)",
+                        "완벽한 리더십 능력 (T, J)",
+                        "모든 동물과 대화할 수 있는 능력 (S, F)"
+                    ]
+                },
+                {
+                    question: "왕국에서 문제가 발생했을 때 당신의 대처는? <span class='princess-emoji'>👑</span>",
+                    options: [
+                        "즉시 행동 계획을 세워 해결 (J)",
+                        "신중하게 고민한 후 결정 (P)",
+                        "주변 의견을 모아 협의 (F)",
+                        "혁신적인 해결책 제시 (N, T)"
+                    ]
+                },
+                {
+                    question: "가장 공주다운 순간은? <span class='princess-emoji'>💫</span>",
+                    options: [
+                        "백성들과 소통하며 웃음을 나눌 때 (E, F)",
+                        "혼자서 탑에서 별을 바라볼 때 (I, N)",
+                        "아름다운 드레스를 입고 무도회에 참석할 때 (S)",
+                        "왕국의 문제를 논리적으로 해결할 때 (T)"
+                    ]
+                },
+                {
+                    question: "당신의 왕국을 한 마디로 표현한다면? <span class='princess-emoji'>🌈</span>",
+                    options: [
+                        "활기차고 즐거운 (E)",
+                        "신비롭고 아름다운 (I, N)",
+                        "따뜻하고 포근한 (S, F)",
+                        "효율적이고 체계적인 (T, J)"
+                    ]
+                },
+                {
+                    question: "가장 좋아하는 공주 활동은? <span class='princess-emoji'>🎀</span>",
+                    options: [
+                        "왕국 행사 주최하기 (E)",
+                        "새로운 마법이나 기술 연구하기 (N, T)",
+                        "동화책 읽거나 시 쓰기 (I, F)",
+                        "정원 가꾸기나 요리하기 (S)"
+                    ]
+                },
+                {
+                    question: "왕국의 중요한 결정을 내릴 때? <span class='princess-emoji'>🤔</span>",
+                    options: [
+                        "논리와 데이터에 의존 (T)",
+                        "감정과 공감을 우선 (F)",
+                        "새로운 가능성을 고려 (N)",
+                        "실제 경험과 사실에 근거 (S)"
+                    ]
+                },
+                {
+                    question: "휴일을 보내는 방식은? <span class='princess-emoji'>🌻</span>",
+                    options: [
+                        "친구들과 큰 파티 (E)",
+                        "혼자서 취미 활동 (I)",
+                        "계획된 완벽한 일정 (J)",
+                        "즉흥적인 모험 (P)"
+                    ]
+                },
+                {
+                    question: "마법의 거울이 당신을 어떻게 비출까요? <span class='princess-emoji'>🪞</span>",
+                    options: [
+                        "따뜻한 마음을 가진 리더 (F, E)",
+                        "깊은 생각을 하는 지혜로운 공주 (T, I)",
+                        "창의적인 아이디어의 소유자 (N)",
+                        "실용적이고 현실적인 문제 해결자 (S)"
+                    ]
+                },
+                {
+                    question: "왕국에서 가장 중요한 가치는? <span class='princess-emoji'>💎</span>",
+                    options: [
+                        "모두의 행복과 화합 (F)",
+                        "진보와 혁신 (N, T)",
+                        "전통과 안정 (S, J)",
+                        "개인의 자유와 표현 (P)"
+                    ]
+                },
+                {
+                    question: "마법 동물을 한 마리 키운다면? <span class='princess-emoji'>🦄</span>",
+                    options: [
+                        "사람들을 즐겁게 하는 색동말 (E, F)",
+                        "지혜를 주는 신비한 용 (I, N)",
+                        "충성스러운 황금사자 (S, J)",
+                        "논리적인 퀴즈를 내는 스핑크스 (T)"
+                    ]
+                },
+                {
+                    question: "가장 스트레스를 받는 상황은? <span class='princess-emoji'>😣</span>",
+                    options: [
+                        "혼자만의 시간이 부족할 때 (I)",
+                        "계획이 틀어졌을 때 (J)",
+                        "감정적 갈등이 있을 때 (F)",
+                        "지나치게 일상적인 일 (P, N)"
+                    ]
+                },
+                {
+                    question: "당신의 왕실 스타일은? <span class='princess-emoji'>👗</span>",
+                    options: [
+                        "화려하고 눈에 띄는 (E)",
+                        "독특하고 개성있는 (N, P)",
+                        "우아하고 클래식한 (S, J)",
+                        "실용적이지만 고급스러운 (T)"
+                    ]
+                },
+                {
+                    question: "왕국을 위해 바라는 것은? <span class='princess-emoji'>🌠</span>",
+                    options: [
+                        "모두가 서로를 이해하는 사회 (F)",
+                        "끊임없는 발전과 성장 (N, T)",
+                        "안정적이고 평화로운 삶 (S, J)",
+                        "다양한 개성이 존중받는 곳 (P)"
+                    ]
+                }
+            ];
+            
+            // MBTI 유형별 설명 데이터
+            const mbtiDescriptions = {
+                "ESTJ": {
+                    title: "효율적인 통치자 공주",
+                    description: "당신은 체계적이고 실용적인 공주님! 왕국을 효율적으로 관리하는 데 탁월한 능력을 가지고 있어요.",
+                    traits: [
+                        "✔️ 조직적이고 계획적인 성격",
+                        "✔️ 현실적이고 실용적인 문제 해결 능력",
+                        "✔️ 왕국의 규칙과 전통을 중요시함",
+                        "✔️ 강한 리더십과 책임감"
+                    ],
+                    analysis: "ESTJ 공주님은 왕국을 안정적이고 질서 있게 유지하는 데 탁월한 능력을 발휘합니다. 현실적인 접근 방식으로 문제를 해결하며, 전통과 규칙을 존중하는 성향이 있습니다. 왕국의 행정 업무를 효율적으로 처리하는 데 재능이 있으며, 백성들에게 공정하고 신뢰할 수 있는 리더로 인정받습니다."
+                },
+                "ESTP": {
+                    title: "모험적인 행동파 공주",
+                    description: "당신은 에너지 넘치고 모험을 좋아하는 공주님! 새로운 경험을 즐기며 순발력이 뛰어나요.",
+                    traits: [
+                        "✔️ 즉흥적이고 활동적인 성격",
+                        "✔️ 현실적인 문제 해결에 재능",
+                        "✔️ 새로운 경험과 모험을 추구",
+                        "✔️ 위기 상황에서 침착함"
+                    ],
+                    analysis: "ESTP 공주님은 왕성한 에너지와 모험심을 가지고 있습니다. 왕궁에만 머무르지 않고 직접 백성들 사이로 나가 현실을 체험하는 것을 좋아합니다. 위기 상황에서도 당황하지 않고 빠르게 대처하는 능력이 있으며, 실용적인 해결책을 제시하는 데 탁월합니다. 왕국의 다양한 활동을 주도하는 카리스마 넘치는 공주님입니다."
+                },
+                "ESFJ": {
+                    title: "따뜻한 돌봄의 공주",
+                    description: "당신은 사랑스럽고 배려심 많은 공주님! 모두를 돌보는 것을 즐기며 왕국의 분위기 메이커예요.",
+                    traits: [
+                        "✔️ 친절하고 사교적인 성격",
+                        "✔️ 타인의 감정을 잘 이해함",
+                        "✔️ 조화와 화합을 중요시함",
+                        "✔️ 전통과 의식을 소중히 여김"
+                    ],
+                    analysis: "ESFJ 공주님은 따뜻한 마음과 배려심으로 왕국 전체에 긍정적인 에너지를 불어넣습니다. 백성들의 감정을 잘 읽고 그들의 필요를 채우기 위해 노력하며, 왕국의 전통과 행사를 소중히 여깁니다. 모든 사람이 화합할 수 있도록 중재하는 역할을 자처하며, 왕실의 따뜻한 이미지를 상징하는 존재입니다."
+                },
+                "ESFP": {
+                    title: "즐거운 파티 공주",
+                    description: "당신은 활기차고 매력적인 공주님! 어디서나 즐거움을 만들며 사람들을 끌어모아요.",
+                    traits: [
+                        "✔️ 사교적이고 낙관적인 성격",
+                        "✔️ 현재의 즐거움을 중시",
+                        "✔️ 예술과 아름다움에 관심이 많음",
+                        "✔️ 유연하고 적응력이 뛰어남"
+                    ],
+                    analysis: "ESFP 공주님은 왕국의 즐거움과 활력을 책임지는 매력적인 존재입니다. 파티와 축제를 기획하는 데 재능이 있으며, 어디를 가든지 즐거운 분위기를 만들어냅니다. 백성들과 쉽게 친해지며 그들의 이야기를 진심으로 들어주는 따뜻한 마음을 가지고 있습니다. 예술과 아름다움에 대한 감각이 뛰어나 왕국의 문화 발전에도 기여합니다."
+                },
+                "ENTJ": {
+                    title: "강력한 지도자 공주",
+                    description: "당신은 비전과 결단력을 가진 공주님! 왕국의 미래를 위해 전략적으로 행동하는 탁월한 리더예요.",
+                    traits: [
+                        "✔️ 자신감 있고 결단력 있는 성격",
+                        "✔️ 장기적인 비전을 가지고 계획함",
+                        "✔️ 효율성과 성과를 중요시함",
+                        "✔️ 도전을 두려워하지 않음"
+                    ],
+                    analysis: "ENTJ 공주님은 강력한 리더십과 비전으로 왕국을 이끌어가는 탁월한 지도자입니다. 미래 지향적인 사고를 바탕으로 왕국의 발전 전략을 세우며, 복잡한 문제도 논리적으로 분석해 해결책을 찾습니다. 효율성을 중요시하며, 왕국의 시스템을 개선하는 데 관심이 많습니다. 도전적인 목표를 설정하고 팀을 이끌어 성과를 이루는 데 탁월한 능력을 보입니다."
+                },
+                "ENTP": {
+                    title: "혁신적인 아이디어 공주",
+                    description: "당신은 창의적이고 독창적인 공주님! 새로운 가능성을 탐구하며 왕국에 혁신을 가져다줘요.",
+                    traits: [
+                        "✔️ 창의적이고 독창적인 성격",
+                        "✔️ 새로운 아이디어와 가능성을 탐구",
+                        "✔️ 지적 호기심이 왕성함",
+                        "✔️ 토론과 논쟁을 즐김"
+                    ],
+                    analysis: "ENTP 공주님은 왕국의 혁신과 변화를 주도하는 창의적인 사고의 소유자입니다. 전통적인 방식에 도전하며 새로운 가능성을 모색하는 것을 즐기고, 복잡한 문제도 독창적인 방식으로 해결합니다. 지적 호기심이 왕성하여 다양한 분야에 관심을 가지며, 왕국에 새로운 기술과 아이디어를 도입하는 데 앞장섭니다. 토론을 통해 아이디어를 발전시키는 것을 즐기며, 백성들과의 소통에서도 영감을 얻습니다."
+                },
+                "ENFJ": {
+                    title: "영감을 주는 카리스마 공주",
+                    description: "당신은 사람들을 이끄는 카리스마 공주님! 따뜻한 마음과 통찰력으로 모두에게 영감을 줘요.",
+                    traits: [
+                        "✔️ 카리스마 있고 사교적인 성격",
+                        "✔️ 타인의 성장과 발전을 도움",
+                        "✔️ 공동체의 조화를 중요시함",
+                        "✔️ 미래 비전을 제시하는 능력"
+                    ],
+                    analysis: "ENFJ 공주님은 백성들에게 영감과 용기를 주는 카리스마 넘치는 지도자입니다. 사람들의 잠재력을 발견하고 그들이 성장할 수 있도록 돕는 것을 즐기며, 왕국의 화합과 공동체 정신을 강조합니다. 미래에 대한 긍정적인 비전을 제시하며 백성들을 하나로 모으는 능력이 뛰어납니다. 따뜻한 마음과 통찰력을 바탕으로 어려운 상황에서도 최선의 해결책을 찾아내며, 왕국의 정신적 지주 역할을 합니다."
+                },
+                "ENFP": {
+                    title: "열정적인 꿈꾸는 공주",
+                    description: "당신은 에너지 넘치고 창의적인 공주님! 끝없는 상상력으로 왕국에 새로운 가능성을 열어줘요.",
+                    traits: [
+                        "✔️ 열정적이고 창의적인 성격",
+                        "✔️ 새로운 가능성과 아이디어에 흥분함",
+                        "✔️ 사람들과 깊은 연결을 형성",
+                        "✔️ 자유로운 영혼과 낙관적인 태도"
+                    ],
+                    analysis: "ENFP 공주님은 왕국에 활력과 창의성을 불어넣는 열정적인 꿈꾸기입니다. 새로운 아이디어와 가능성에 대해 흥분하며, 백성들에게 영감을 주는 비전을 제시합니다. 사람들과의 깊은 연결을 중요시하며, 각 개인의 독특한 가치를 인정합니다. 자유로운 영혼과 낙관적인 태도로 왕국에 긍정적인 에너지를 전파하며, 전통적인 방식에 얽매이지 않고 혁신적인 접근을 시도합니다. 어려운 상황에서도 새로운 기회를 발견하는 능력이 뛰어납니다."
+                },
+                "ISTJ": {
+                    title: "신뢰할 수 있는 책임감 공주",
+                    description: "당신은 믿음직하고 꼼꼼한 공주님! 왕국의 안정을 위해 헌신하며 신뢰를 받아요.",
+                    traits: [
+                        "✔️ 신뢰할 수 있고 책임감 있는 성격",
+                        "✔️ 사실과 세부 사항에 주의를 기울임",
+                        "✔️ 전통과 규칙을 존중함",
+                        "✔️ 조직적이고 체계적인 접근"
+                    ],
+                    analysis: "ISTJ 공주님은 왕국의 안정과 질서를 유지하는 믿음직한 존재입니다. 꼼꼼하고 신뢰할 수 있는 성격으로 왕국의 행정 업무를 완벽하게 처리하며, 전통과 규칙을 존중합니다. 사실에 기반한 정확한 정보를 바탕으로 결정을 내리며, 감정보다는 논리를 우선시합니다. 왕국의 재정과 자원을 효율적으로 관리하는 데 탁월한 능력을 보이며, 백성들에게 공정하고 신뢰할 수 있는 지도자로 인정받습니다."
+                },
+                "ISTP": {
+                    title: "실용적인 문제 해결자 공주",
+                    description: "당신은 호기심 많고 기술적인 공주님! 문제를 직접 해결하며 실용적인 솔루션을 찾아요.",
+                    traits: [
+                        "✔️ 분석적이고 실용적인 성격",
+                        "✔️ 문제 해결에 뛰어난 능력",
+                        "✔️ 위기 상황에서 침착함",
+                        "✔️ 자유로운 영혼과 호기심"
+                    ],
+                    analysis: "ISTP 공주님은 왕국의 문제를 실용적인 방식으로 해결하는 재능 있는 기술자입니다. 호기심이 많고 분석적인 사고를 바탕으로 복잡한 문제도 논리적으로 파악합니다. 위기 상황에서도 침착하게 대처하며, 직접 손으로 문제를 해결하는 것을 즐깁니다. 전통적인 방식에 얽매이지 않고 효율적인 해결책을 모색하며, 왕국의 기술과 시스템을 개선하는 데 관심이 많습니다. 자유로운 영혼으로 때로는 왕궁을 벗어나 모험을 즐기기도 합니다."
+                },
+                "ISFJ": {
+                    title: "헌신적인 보호자 공주",
+                    description: "당신은 따뜻하고 배려심 많은 공주님! 조용히 모두를 돌보며 왕국의 안정을 지켜요.",
+                    traits: [
+                        "✔️ 따뜻하고 배려심 있는 성격",
+                        "✔️ 세부 사항과 실용적인 면을 중시",
+                        "✔️ 전통과 안정을 소중히 여김",
+                        "✔️ 타인을 위해 헌신함"
+                    ],
+                    analysis: "ISFJ 공주님은 조용하지만 왕국 전체를 돌보는 헌신적인 보호자입니다. 백성들의 필요를 세심하게 관찰하며 그들을 지원하는 데 큰 만족을 느낍니다. 전통과 안정을 소중히 여기며, 왕국의 역사와 문화를 보존하는 데 관심이 많습니다. 실용적인 방식으로 문제를 해결하며, 자신의 감정을 과시하기보다는 조용히 행동으로 보여줍니다. 왕실의 따뜻한 이미지를 상징하며, 백성들에게 믿음직한 존재로 자리잡고 있습니다."
+                },
+                "ISFP": {
+                    title: "감성적인 예술가 공주",
+                    description: "당신은 따뜻하고 예술적인 공주님! 아름다움과 조화를 창조하며 조용히 자신의 길을 가요.",
+                    traits: [
+                        "✔️ 감성적이고 예술적인 성격",
+                        "✔️ 현재 순간을 즐기며 살아감",
+                        "✔️ 아름다움과 조화를 중요시함",
+                        "✔️ 타인의 감정을 잘 이해함"
+                    ],
+                    analysis: "ISFP 공주님은 왕국의 아름다움과 감성을 책임지는 예술가입니다. 예술적 재능이 뛰어나며, 아름다운 환경을 창조하는 데 관심이 많습니다. 현재 순간을 즐기며 살아가고, 강요받는 것을 싫어합니다. 백성들의 감정을 잘 읽고 공감하며, 그들의 이야기를 조용히 들어주는 따뜻한 마음을 가지고 있습니다. 왕궁의 정원을 아름답게 가꾸거나 예술 작품을 창작하는 등 조용하지만 의미 있는 방식으로 왕국에 기여합니다."
+                },
+                "INTJ": {
+                    title: "전략적인 통찰력 공주",
+                    description: "당신은 독창적이고 지적인 공주님! 복잡한 문제도 해결하며 왕국의 미래를 설계해요.",
+                    traits: [
+                        "✔️ 독창적이고 분석적인 성격",
+                        "✔️ 장기적인 비전과 전략을 수립",
+                        "✔️ 효율성과 능력을 중요시함",
+                        "✔️ 복잡한 문제 해결에 뛰어남"
+                    ],
+                    analysis: "INTJ 공주님은 왕국의 미래를 설계하는 전략적인 사고의 소유자입니다. 독창적인 아이디어와 분석적인 사고로 복잡한 문제도 해결하며, 장기적인 비전을 가지고 왕국을 이끕니다. 효율성과 능력을 중요시하며, 감정보다는 논리와 사실에 기반한 결정을 내립니다. 전통적인 방식에 의문을 제기하고 혁신적인 해결책을 모색하며, 왕국의 시스템과 구조를 개선하는 데 관심이 많습니다. 백성들과의 감정적 교류보다는 왕국의 발전을 위한 큰 그림을 그리는 데 집중합니다."
+                },
+                "INTP": {
+                    title: "지적인 탐구자 공주",
+                    description: "당신은 호기심 많고 논리적인 공주님! 복잡한 이론을 탐구하며 독창적인 해결책을 찾아요.",
+                    traits: [
+                        "✔️ 지적 호기심이 왕성한 성격",
+                        "✔️ 이론과 개념을 탐구하는 것을 즐김",
+                        "✔️ 독창적이고 혁신적인 사고",
+                        "✔️ 복잡한 문제 해결에 능숙함"
+                    ],
+                    analysis: "INTP 공주님은 왕국의 지적 탐구를 책임지는 호기심 많은 사고가입니다. 이론과 개념을 탐구하는 것을 즐기며, 복잡한 문제를 독창적인 방식으로 해결합니다. 전통적인 방식에 의문을 제기하고 새로운 가능성을 모색하며, 왕국의 기술과 지식을 발전시키는 데 관심이 많습니다. 감정 표현보다는 논리적인 토론을 선호하며, 때로는 자신의 내적 세계에 깊이 빠져들기도 합니다. 왕국의 복잡한 문제를 해결하기 위해 혁신적인 이론과 시스템을 개발합니다."
+                },
+                "INFJ": {
+                    title: "통찰력 있는 이상주의자 공주",
+                    description: "당신은 직관적이고 통찰력 있는 공주님! 깊은 사고로 왕국의 미래를 위한 비전을 제시해요.",
+                    traits: [
+                        "✔️ 통찰력 있고 직관적인 성격",
+                        "✔️ 깊은 사고와 내적 신념을 가짐",
+                        "✔️ 타인의 감정을 잘 이해함",
+                        "✔️ 미래를 위한 비전을 제시"
+                    ],
+                    analysis: "INFJ 공주님은 왕국의 정신적 지도자이자 이상주의자입니다. 깊은 통찰력과 직관으로 사람들과 상황의 본질을 꿰뚫어 보며, 미래를 위한 비전을 제시합니다. 백성들의 감정을 깊이 이해하고 공감하며, 왕국의 화합과 발전을 위한 깊은 사고를 합니다. 강한 내적 신념을 가지고 있으며, 왕국의 가치와 문화를 보존하고 발전시키는 데 관심이 많습니다. 조용하지만 강한 카리스마로 백성들에게 영감을 주는 존재입니다."
+                },
+                "INFP": {
+                    title: "이상적인 꿈꾸는 공주",
+                    description: "당신은 감성적이고 창의적인 공주님! 깊은 가치관으로 왕국에 아름다움과 의미를 더해요.",
+                    traits: [
+                        "✔️ 이상적이고 감성적인 성격",
+                        "✔️ 깊은 가치관과 신념을 가짐",
+                        "✔️ 창의적이고 예술적인 감각",
+                        "✔️ 타인의 감정을 잘 이해함"
+                    ],
+                    analysis: "INFP 공주님은 왕국의 아름다움과 의미를 창조하는 감성적인 예술가입니다. 깊은 가치관과 신념을 가지고 있으며, 자신의 이상을 실현하기 위해 노력합니다. 창의적이고 예술적인 감각이 뛰어나며, 왕국의 문화와 예술을 발전시키는 데 관심이 많습니다. 백성들의 감정을 깊이 이해하고 공감하며, 조용하지만 강한 신념으로 왕국에 긍정적인 변화를 이끌어냅니다. 때로는 자신의 내적 세계에 깊이 빠져들기도 하지만, 그 속에서 왕국을 위한 아름다운 비전을 창조해냅니다."
+                }
+            };
+            
+            // MBTI 궁합 데이터
+            const compatibilityData = {
+                "ESTJ": { best: ["ISFP", "ISTP"], good: ["ESFJ", "ESTJ", "ISTJ", "INTJ"], poor: ["INFP", "ENFP", "INTP", "ENTP"] },
+                "ESTP": { best: ["ISFJ", "INFJ"], good: ["ESFP", "ESTP", "ISTP", "INTP"], poor: ["INTJ", "ENTJ", "INFP", "ENFP"] },
+                "ESFJ": { best: ["ISTP", "INTP"], good: ["ESTJ", "ESFJ", "ISFJ", "ENFJ"], poor: ["INTJ", "ENTJ", "INFP", "ENFP"] },
+                "ESFP": { best: ["INTJ", "ISTJ"], good: ["ESTP", "ESFP", "ISFP", "ENFP"], poor: ["INFJ", "ENFJ", "INTP", "ENTP"] },
+                "ENTJ": { best: ["INFP", "ISFP"], good: ["INTJ", "ENTJ", "ENTP", "ESTJ"], poor: ["ISFJ", "ESFJ", "INFJ", "ENFJ"] },
+                "ENTP": { best: ["INFJ", "ISFJ"], good: ["INTJ", "ENTJ", "ENTP", "INTP"], poor: ["ISFJ", "ESFJ", "ISTJ", "ESTJ"] },
+                "ENFJ": { best: ["ISTP", "INTP"], good: ["ENFJ", "INFJ", "ENFP", "ESFJ"], poor: ["ISTJ", "ESTJ", "INTJ", "ENTJ"] },
+                "ENFP": { best: ["INTJ", "INFJ"], good: ["ENFP", "INFP", "ENTP", "ENFJ"], poor: ["ISTJ", "ESTJ", "ISFJ", "ESFJ"] },
+                "ISTJ": { best: ["ESFP", "ENFP"], good: ["ESTJ", "ISTJ", "ISFJ", "INTJ"], poor: ["ENFP", "ENTP", "INFP", "ENFJ"] },
+                "ISTP": { best: ["ENFJ", "ESFJ"], good: ["ESTP", "ISTP", "ISFP", "INTP"], poor: ["ENFJ", "INFJ", "ENFP", "INFP"] },
+                "ISFJ": { best: ["ENTP", "ESTP"], good: ["ESFJ", "ISFJ", "ISTJ", "INFJ"], poor: ["ENTP", "ENFP", "INTJ", "ENTJ"] },
+                "ISFP": { best: ["ENTJ", "ESTJ"], good: ["ESFP", "ISFP", "INFP", "ISTP"], poor: ["ENTJ", "INTJ", "ENTP", "ENFJ"] },
+                "INTJ": { best: ["ENFP", "ESFP"], good: ["INTJ", "ENTJ", "ISTJ", "INTP"], poor: ["ESFJ", "ISFJ", "ESFP", "ISFP"] },
+                "INTP": { best: ["ENFJ", "ESFJ"], good: ["INTJ", "INTP", "ENTP", "ISTP"], poor: ["ESFJ", "ISFJ", "ESTJ", "ISTJ"] },
+                "INFJ": { best: ["ENTP", "ESTP"], good: ["INFJ", "ENFJ", "INFP", "INTJ"], poor: ["ESTP", "ISTP", "ESTJ", "ISTJ"] },
+                "INFP": { best: ["ENTJ", "ESTJ"], good: ["INFP", "ENFP", "INFJ", "ISFP"], poor: ["ESTJ", "ISTJ", "ENTJ", "INTJ"] }
+            };
+            
+            // 테스트 상태 관리 변수
+            let currentQuestion = 0;
+            let answers = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+            let selectedOption = null;
+            
+            // DOM 요소
+            const questionElement = document.getElementById('question');
+            const optionsElement = document.getElementById('options');
+            const nextBtn = document.getElementById('nextBtn');
+            const progressBar = document.getElementById('progressBar');
+            const testContainer = document.getElementById('testContainer');
+            const resultContainer = document.getElementById('resultContainer');
+            const resultType = document.getElementById('resultType');
+            const resultDescription = document.getElementById('resultDescription');
+            const resultAnalysis = document.getElementById('resultAnalysis');
+            const resultTraits = document.getElementById('resultTraits');
+            const resultCompatibility = document.getElementById('resultCompatibility');
+            const allTypesGrid = document.getElementById('allTypesGrid');
+            const allTypesDetails = document.getElementById('allTypesDetails');
+            const compatibilityChart = document.getElementById('compatibilityChart');
+            const restartBtn = document.getElementById('restartBtn');
+            const accordionItems = document.querySelectorAll('.accordion-item');
+            
+            // 테스트 초기화
+            function initTest() {
+                currentQuestion = 0;
+                answers = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+                selectedOption = null;
+                nextBtn.disabled = true;
+                testContainer.style.display = 'block';
+                resultContainer.style.display = 'none';
+                loadQuestion();
+            }
+            
+            // 질문 로드
+            function loadQuestion() {
+                const question = questions[currentQuestion];
+                questionElement.innerHTML = question.question;
+                optionsElement.innerHTML = '';
+                
+                question.options.forEach((option, index) => {
+                    const optionElement = document.createElement('div');
+                    optionElement.className = 'option';
+                    optionElement.innerHTML = `
+                        <input type="radio" name="option" id="option${index}" value="${index}">
+                        <label for="option${index}">${option}</label>
+                    `;
+                    optionElement.addEventListener('click', () => selectOption(index));
+                    optionsElement.appendChild(optionElement);
+                });
+                
+                // 진행률 업데이트
+                const progress = ((currentQuestion) / questions.length) * 100;
+                progressBar.style.width = `${progress}%`;
+                progressBar.textContent = `${Math.round(progress)}%`;
+            }
+            
+            // 옵션 선택
+            function selectOption(index) {
+                selectedOption = index;
+                nextBtn.disabled = false;
+                
+                // 모든 옵션에서 selected 클래스 제거
+                document.querySelectorAll('.option').forEach(option => {
+                    option.classList.remove('selected');
+                });
+                
+                // 선택한 옵션에 selected 클래스 추가
+                document.querySelector(`#option${index}`).parentElement.classList.add('selected');
+            }
+            
+            // 다음 질문으로 이동
+            function nextQuestion() {
+                if (selectedOption === null) return;
+                
+                // 답변 처리
+                const selectedOptions = questions[currentQuestion].options[selectedOption];
+                if (selectedOptions.includes('E')) answers.E++;
+                if (selectedOptions.includes('I')) answers.I++;
+                if (selectedOptions.includes('S')) answers.S++;
+                if (selectedOptions.includes('N')) answers.N++;
+                if (selectedOptions.includes('T')) answers.T++;
+                if (selectedOptions.includes('F')) answers.F++;
+                if (selectedOptions.includes('J')) answers.J++;
+                if (selectedOptions.includes('P')) answers.P++;
+                
+                // 다음 질문 또는 결과 표시
+                currentQuestion++;
+                selectedOption = null;
+                nextBtn.disabled = true;
+                
+                if (currentQuestion < questions.length) {
+                    loadQuestion();
+                } else {
+                    showResult();
+                }
+            }
+            
+            // 결과 계산
+            function calculateResult() {
+                const type = [
+                    answers.E > answers.I ? 'E' : 'I',
+                    answers.S > answers.N ? 'S' : 'N',
+                    answers.T > answers.F ? 'T' : 'F',
+                    answers.J > answers.P ? 'J' : 'P'
+                ].join('');
+                
+                return type;
+            }
+            
+            // 모든 유형 점수 계산
+            function calculateAllTypeScores() {
+                const typeScores = {};
+                const types = Object.keys(mbtiDescriptions);
+                
+                types.forEach(type => {
+                    let score = 0;
+                    // E/I
+                    if (type.includes('E')) score += answers.E;
+                    else score += answers.I;
+                    // S/N
+                    if (type.includes('S')) score += answers.S;
+                    else score += answers.N;
+                    // T/F
+                    if (type.includes('T')) score += answers.T;
+                    else score += answers.F;
+                    // J/P
+                    if (type.includes('J')) score += answers.J;
+                    else score += answers.P;
+                    
+                    typeScores[type] = score;
+                });
+                
+                return typeScores;
+            }
+            
+            // 결과 표시
+            function showResult() {
+                testContainer.style.display = 'none';
+                resultContainer.style.display = 'block';
+                
+                const resultType = calculateResult();
+                const typeScores = calculateAllTypeScores();
+                
+                // 결과 유형 표시
+                displayResultType(resultType);
+                
+                // 모든 유형 표시 (순위 포함)
+                displayAllTypes(typeScores, resultType);
+                
+                // 궁합 차트 표시
+                displayCompatibilityChart(resultType);
+            }
+            
+            // 결과 유형 표시
+            function displayResultType(type) {
+                const description = mbtiDescriptions[type];
+                
+                resultType.textContent = type;
+                resultDescription.textContent = description.description;
+                
+                // 성향 해석
+                let analysisHTML = `<p>${description.analysis}</p>`;
+                resultAnalysis.innerHTML = analysisHTML;
+                
+                // 특징
+                let traitsHTML = '<ul>';
+                description.traits.forEach(trait => {
+                    traitsHTML += `<li>${trait}</li>`;
+                });
+                traitsHTML += '</ul>';
+                resultTraits.innerHTML = traitsHTML;
+                
+                // 궁합
+                const compatibility = compatibilityData[type];
+                let compatibilityHTML = `
+                    <p>최고의 궁합: ${compatibility.best.map(t => `${t} ${mbtiDescriptions[t].title}`).join(', ')}</p>
+                    <p>좋은 궁합: ${compatibility.good.slice(0, 4).map(t => `${t} ${mbtiDescriptions[t].title}`).join(', ')}</p>
+                    <p>도전적인 궁합: ${compatibility.poor.slice(0, 4).map(t => `${t} ${mbtiDescriptions[t].title}`).join(', ')}</p>
+                `;
+                resultCompatibility.innerHTML = compatibilityHTML;
+            }
+            
+            // 모든 유형 표시 (순위 포함)
+            function displayAllTypes(typeScores, userType) {
+                // 점수 기준으로 정렬
+                const sortedTypes = Object.keys(typeScores).sort((a, b) => typeScores[b] - typeScores[a]);
+                
+                // 그리드에 표시
+                allTypesGrid.innerHTML = '';
+                sortedTypes.forEach((type, index) => {
+                    const typeCard = document.createElement('div');
+                    typeCard.className = `type-card ${type === userType ? 'selected' : ''}`;
+                    typeCard.innerHTML = `
+                        <div class="type">${type}</div>
+                        <div>${mbtiDescriptions[type].title}</div>
+                        <div class="score">${typeScores[type]}점 ${index < 3 ? '<span class="crown-icon">👑</span>' : ''}</div>
+                    `;
+                    allTypesGrid.appendChild(typeCard);
+                });
+                
+                // 상세 설명
+                let detailsHTML = '';
+                sortedTypes.forEach(type => {
+                    const desc = mbtiDescriptions[type];
+                    detailsHTML += `
+                        <div style="margin-bottom: 20px; border-bottom: 2px dashed var(--primary-pink); padding-bottom: 15px;">
+                            <h4 style="color: var(--dark-pink); font-size: 1.8rem; margin-bottom: 5px;">
+                                ${type} - ${desc.title} ${type === userType ? '<span style="color: var(--gold);">(당신의 유형)</span>' : ''}
+                            </h4>
+                            <p style="font-size: 1.4rem; margin-top: 5px;"><strong>${desc.description}</strong></p>
+                            <ul style="font-size: 1.3rem;">
+                                ${desc.traits.map(t => `<li>${t}</li>`).join('')}
+                            </ul>
+                        </div>
+                    `;
+                });
+                allTypesDetails.innerHTML = detailsHTML;
+            }
+            
+            // 궁합 차트 표시
+            function displayCompatibilityChart(userType) {
+                let chartHTML = `
+                    <table class="compatibility-chart">
+                        <tr>
+                            <th>MBTI 유형</th>
+                            <th>공주 스타일</th>
+                            <th>당신과의 궁합</th>
+                        </tr>
+                `;
+                
+                const compatibility = compatibilityData[userType];
+                
+                Object.keys(mbtiDescriptions).forEach(type => {
+                    let compatibilityLevel = '';
+                    if (compatibility.best.includes(type)) compatibilityLevel = 'good';
+                    else if (compatibility.good.includes(type)) compatibilityLevel = 'average';
+                    else if (compatibility.poor.includes(type)) compatibilityLevel = 'poor';
+                    
+                    chartHTML += `
+                        <tr class="${compatibilityLevel}">
+                            <td>${type}</td>
+                            <td>${mbtiDescriptions[type].title}</td>
+                            <td>
+                                ${compatibility.best.includes(type) ? '최고의 궁합 💖' : 
+                                  compatibility.good.includes(type) ? '좋은 궁합 👍' : 
+                                  compatibility.poor.includes(type) ? '도전적인 궁합 ⚠️' : '보통 궁합'}
+                            </td>
+                        </tr>
+                    `;
+                });
+                
+                chartHTML += `</table>`;
+                compatibilityChart.innerHTML = chartHTML;
+            }
+            
+            // Floating elements 생성
+            function createFloatingElements() {
+                const container = document.getElementById('floatingElements');
+                const emojis = ['🌸', '🎀', '💖', '✨', '👑', '💎', '🦄', '🌈', '🎀', '💫'];
+                
+                for (let i = 0; i < 15; i++) {
+                    const element = document.createElement('div');
+                    element.className = 'floating-element';
+                    element.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+                    element.style.left = `${Math.random() * 100}%`;
+                    element.style.top = `${Math.random() * 100}%`;
+                    element.style.fontSize = `${Math.random() * 20 + 10}px`;
+                    element.style.animationDuration = `${Math.random() * 15 + 10}s`;
+                    element.style.animationDelay = `${Math.random() * 5}s`;
+                    container.appendChild(element);
+                }
+            }
+            
+            // 아코디언 토글
+            accordionItems.forEach(item => {
+                const header = item.querySelector('.accordion-header');
+                const content = item.querySelector('.accordion-content');
+                const toggle = header.querySelector('span:last-child');
+                
+                header.addEventListener('click', () => {
+                    item.classList.toggle('active');
+                    content.style.maxHeight = item.classList.contains('active') ? `${content.scrollHeight}px` : '0';
+                    toggle.textContent = item.classList.contains('active') ? '-' : '+';
+                });
+            });
+            
+            // 이벤트 리스너
+            nextBtn.addEventListener('click', nextQuestion);
+            restartBtn.addEventListener('click', initTest);
+            
+            // 테스트 시작
+            initTest();
+        });
+    </script>
+</body>
+</html>
