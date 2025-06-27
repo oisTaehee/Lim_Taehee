@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>에코마켓 - 친환경 쇼핑몰</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #f8f9fa;
+        }
+        
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 500px;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .eco-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .nav-link:hover {
+            color: #4CAF50;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-link:hover {
+            color: #4CAF50;
+            transition: color 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- 헤더 영역 -->
+    <header class="bg-white shadow-sm">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <i class="fas fa-leaf text-3xl text-green-600 mr-2"></i>
+                    <h1 class="text-2xl font-bold text-gray-800">에코마켓</h1>
+                </div>
+                
+                <div class="hidden md:flex space-x-8">
+                    <a href="#" class="nav-link text-gray-700 font-medium">홈</a>
+                    <a href="#" class="nav-link text-gray-700 font-medium">제품</a>
+                    <a href="#" class="nav-link text-gray-700 font-medium">브랜드 스토리</a>
+                    <a href="#" class="nav-link text-gray-700 font-medium">지속가능성</a>
+                    <a href="#" class="nav-link text-gray-700 font-medium">커뮤니티</a>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <a href="#" class="text-gray-700 hover:text-green-600"><i class="fas fa-search text-xl"></i></a>
+                    <a href="#" class="text-gray-700 hover:text-green-600"><i class="fas fa-user text-xl"></i></a>
+                    <a href="#" class="text-gray-700 hover:text-green-600"><i class="fas fa-shopping-cart text-xl"></i></a>
+                    <button class="md:hidden text-gray-700">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 메인 배너 영역 -->
+    <section class="hero-section flex items-center justify-center text-center text-white">
+        <div class="px-4">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6">지구를 생각하는 소비, 에코마켓에서 시작하세요</h2>
+            <p class="text-xl mb-8">친환경 제품으로 일상 속 작은 변화를 만들어보세요</p>
+            <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300">
+                제품 보러가기
+            </button>
+        </div>
+    </section>
+
+    <!-- 인기 제품 섹션 -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">이번 주 인기 제품</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">고객님들이 가장 많이 찾으신 친환경 제품들을 소개합니다</p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                <!-- 제품 카드 1 -->
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-md relative">
+                    <div class="eco-badge">친환경 인증</div>
+                    <img src="https://images.unsplash.com/photo-1600857544200-b2f666a9a1ec?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="천연 비누" class="w-full h-64 object-cover">
+                    <div class="p-4">
+                        <h3 class="font-bold text-xl mb-2 text-gray-800">천연 대나무 칫솔</h3>
+                        <p class="text-gray-600 mb-3">플라스틱 없는 생분해 가능한 칫솔</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-green-600">₩9,900</span>
+                            <button class="bg-green-100 text-green-600 hover:bg-green-200 py-1 px-3 rounded-full text-sm font-medium transition duration-300">
+                                장바구니
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 제품 카드 2 -->
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-md relative">
+                    <div class="eco-badge">친환경 인증</div>
+                    <img src="https://images.unsplash.com/photo-1605000797499-95a51c5269ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80" alt="유리 용기" class="w-full h-64 object-cover">
+                    <div class="p-4">
+                        <h3 class="font-bold text-xl mb-2 text-gray-800">유리 보관 용기 세트</h3>
+                        <p class="text-gray-600 mb-3">플라스틱 대체용 유리 보관 용기 3종 세트</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-green-600">₩29,900</span>
+                            <button class="bg-green-100 text-green-600 hover:bg-green-200 py-1 px-3 rounded-full text-sm font-medium transition duration-300">
+                                장바구니
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 제품 카드 3 -->
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-md relative">
+                    <div class="eco-badge">친환경 인증</div>
+                    <img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="천 가방" class="w-full h-64 object-cover">
+                    <div class="p-4">
+                        <h3 class="font-bold text-xl mb-2 text-gray-800">유기농 면 쇼핑백</h3>
+                        <p class="text-gray-600 mb-3">재활용 가능한 유기농 면으로 제작된 에코백</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-green-600">₩15,900</span>
+                            <button class="bg-green-100 text-green-600 hover:bg-green-200 py-1 px-3 rounded-full text-sm font-medium transition duration-300">
+                                장바구니
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 제품 카드 4 -->
+                <div class="product-card bg-white rounded-lg overflow-hidden shadow-md relative">
+                    <div class="eco-badge">친환경 인증</div>
+                    <img src="https://images.unsplash.com/photo-1606225457115-9b0de873c5a8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" alt="천연 세제" class="w-full h-64 object-cover">
+                    <div class="p-4">
+                        <h3 class="font-bold text-xl mb-2 text-gray-800">천연 주방 세제</h3>
+                        <p class="text-gray-600 mb-3">유해 성분 없는 친환경 주방 세제</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-green-600">₩12,900</span>
+                            <button class="bg-green-100 text-green-600 hover:bg-green-200 py-1 px-3 rounded-full text-sm font-medium transition duration-300">
+                                장바구니
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <button class="border-2 border-green-600 text-green-600 hover:bg-green-600 hover:text-white font-bold py-2 px-8 rounded-full transition duration-300">
+                    더 많은 제품 보기
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 지속가능성 섹션 -->
+    <section class="py-16 bg-green-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">우리의 지속가능한 노력</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">에코마켓은 지구를 위한 작은 변화를 만들어가고 있습니다</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-lg shadow-sm text-center">
+                    <div class="bg-green-100 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-recycle text-2xl text-green-600"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-3 text-gray-800">재활용 포장</h3>
+                    <p class="text-gray-600">모든 제품은 100% 재활용 가능한 포장재로 배송됩니다. 플라스틱 사용을 최소화합니다.</p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-lg shadow-sm text-center">
+                    <div class="bg-green-100 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-leaf text-2xl text-green-600"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-3 text-gray-800">탄소 중립 배송</h3>
+                    <p class="text-gray-600">배송 과정에서 발생하는 탄소 배출량을 계산하여 상쇄하는 프로젝트에 기여합니다.</p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-lg shadow-sm text-center">
+                    <div class="bg-green-100 w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-hand-holding-heart text-2xl text-green-600"></i>
+                    </div>
+                    <h3 class="font-bold text-xl mb-3 text-gray-800">공정 무역</h3>
+                    <p class="text-gray-600">모든 제품은 공정한 대가를 지급하는 협력업체에서 공급받습니다. 지역 사회 발전을 지원합니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 고객 후기 섹션 -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">고객님들의 생생한 후기</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">에코마켓을 이용하신 고객님들의 솔직한 평가를 확인해보세요</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <span class="text-gray-500 text-sm">2023.07.15</span>
+                    </div>
+                    <p class="text-gray-700 mb-4">"천연 칫솔을 사용한 지 한 달이 넘었는데, 플라스틱 칫솔보다 훨씬 마음이 편안해요. 가격도 합리적이고 디자인도 예뻐서 만족합니다!"</p>
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-gray-300 mr-3 overflow-hidden">
+                            <img src="https://randomuser.me/api/portraits/women/43.jpg" alt="고객 사진" class="w-full h-full object-cover">
+                        </div>
+                        <span class="font-medium text-gray-800">김지현 님</span>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span class="text-gray-500 text-sm">2023.07.10</span>
+                    </div>
+                    <p class="text-gray-700 mb-4">"유리 보관 용기 세트 정말 잘 샀어요. 플라스틱 용기보다 훨씬 위생적이고 오래 사용할 수 있을 것 같아요. 다음에 또 구매할 예정입니다!"</p>
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-gray-300 mr-3 overflow-hidden">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="고객 사진" class="w-full h-full object-cover">
+                        </div>
+                        <span class="font-medium text-gray-800">이민수 님</span>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <span class="text-gray-500 text-sm">2023.07.05</span>
+                    </div>
+                    <p class="text-gray-700 mb-4">"친환경 쇼핑을 시작하려고 에코마켓을 찾았는데, 제품 품질도 좋고 배송도 빠르네요. 앞으로 자주 이용할 것 같아요. 지구를 위한 작은 실천을 할 수 있어 기쁩니다."</p>
+                    <div class="flex items-center">
+                        <div class="w-10 h-10 rounded-full bg-gray-300 mr-3 overflow-hidden">
+                            <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="고객 사진" class="w-full h-full object-cover">
+                        </div>
+                        <span class="font-medium text-gray-800">박서연 님</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 뉴스레터 구독 섹션 -->
+    <section class="py-16 bg-green-600 text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-4">지속가능한 소비에 관한 소식을 받아보세요</h2>
+            <p class="mb-8 max-w-2xl mx-auto">에코마켓의 신제품 소식, 특별 할인, 친환경 생활 팁 등을 이메일로 받아보실 수 있습니다</p>
+            
+            <div class="max-w-md mx-auto flex">
+                <input type="email" placeholder="이메일 주소를 입력해주세요" class="flex-grow px-4 py-3 rounded-l-lg focus:outline-none text-gray-800">
+                <button class="bg-green-800 hover:bg-green-900 px-6 py-3 rounded-r-lg font-medium transition duration-300">
+                    구독하기
+                </button>
+            </div>
+            
+            <p class="mt-4 text-sm text-green-200">개인정보 보호정책에 동의합니다. 언제든지 구독을 취소할 수 있습니다.</p>
+        </div>
+    </section>
+
+    <!-- 푸터 영역 -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <i class="fas fa-leaf text-3xl text-green-400 mr-2"></i>
+                        <h3 class="text-2xl font-bold">에코마켓</h3>
+                    </div>
+                    <p class="text-gray-400 mb-4">지구를 생각하는 소비, 에코마켓과 함께하세요</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-blogger"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">쇼핑하기</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="footer-link text-gray-400 hover:text-white">신제품</a></li>
+                        <li><a href="#" class="footer-link text-gray-400 hover:text-white">인기 제품</a></li>
+                        <li><a href="#" class="footer-link text-gray-400 hover:text-white">할인 제품</a></li>
+                        <li><a href="#" class="footer-link text-gray-400 hover:text-white">기프트 카드</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">고객 지원</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="footer-link text-gray-400 hover:text-white">자주 묻는 질문</a></li>
+                        <li><a href="#" class="footer-link text-gray-400 hover:text-white">배송 정보</a></li>
+                        <li><a href="#" class="footer-link text-gray-400 hover:text-white">반품 정책</a></li>
+                        <li><a href="#" class="footer-link text-gray-400 hover:text-white">문의하기</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold mb-4">회사 정보</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="footer-link text-gray-400 hover:text-white">회사 소개</a></li>
+                        <li><a href="#" class="footer-link text-gray-400 hover:text-white">지속가능성</a></li>
+                        <li><a href="#" class="footer-link text-gray-400 hover:text-white">채용 정보</a></li>
+                        <li><a href="#" class="footer-link text-gray-400 hover:text-white">개인정보 처리방침</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-12 pt-8 text-center text-gray-400">
+                <p>© 2023 에코마켓. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 간단한 자바스크립트 기능 추가
+        document.addEventListener('DOMContentLoaded', function() {
+            // 모바일 메뉴 토글 기능
+            const mobileMenuButton = document.querySelector('.md\\:hidden');
+            const mobileMenu = document.querySelector('.md\\:flex');
+            
+            if(mobileMenuButton) {
+                mobileMenuButton.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                    mobileMenu.classList.toggle('flex');
+                    mobileMenu.classList.toggle('flex-col');
+                    mobileMenu.classList.toggle('absolute');
+                    mobileMenu.classList.toggle('bg-white');
+                    mobileMenu.classList.toggle('w-full');
+                    mobileMenu.classList.toggle('left-0');
+                    mobileMenu.classList.toggle('top-16');
+                    mobileMenu.classList.toggle('p-4');
+                    mobileMenu.classList.toggle('shadow-md');
+                    mobileMenu.classList.toggle('z-50');
+                });
+            }
+            
+            // 제품 카드 호버 효과
+            const productCards = document.querySelectorAll('.product-card');
+            productCards.forEach(card => {
+                card.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease';
+            });
+            
+            // 스크롤 시 헤더 색상 변경
+            window.addEventListener('scroll', function() {
+                const header = document.querySelector('header');
+                if(window.scrollY > 50) {
+                    header.classList.add('shadow-lg');
+                } else {
+                    header.classList.remove('shadow-lg');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
