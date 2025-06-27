@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>다크 MBTI 심리 테스트</title>
+    <style>
+        :root {
+            --dark-bg: #121212;
+            --darker-bg: #0a0a0a;
+            --accent: #8b0000;
+            --text: #e0e0e0;
+            --highlight: #ff5555;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            border-bottom: 1px solid var(--accent);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: radial-gradient(circle at center, transparent 0%, var(--darker-bg) 70%);
+            z-index: -1;
+        }
+        
+        h1 {
+            color: var(--highlight);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(255, 85, 85, 0.3);
+            animation: pulse 3s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { text-shadow: 0 0 10px rgba(255, 85, 85, 0.3); }
+            50% { text-shadow: 0 0 20px rgba(255, 85, 85, 0.6); }
+            100% { text-shadow: 0 0 10px rgba(255, 85, 85, 0.3); }
+        }
+        
+        .subtitle {
+            color: #aaa;
+            font-style: italic;
+        }
+        
+        .question-container {
+            background-color: var(--darker-bg);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            border-left: 4px solid var(--accent);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .question-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+        }
+        
+        .question {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--highlight);
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .option {
+            background-color: rgba(139, 0, 0, 0.2);
+            padding: 12px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .option::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 85, 85, 0.1), transparent);
+            transition: all 0.5s;
+        }
+        
+        .option:hover {
+            background-color: rgba(139, 0, 0, 0.4);
+            border-color: var(--accent);
+        }
+        
+        .option:hover::before {
+            left: 100%;
+        }
+        
+        .option.selected {
+            background-color: rgba(139, 0, 0, 0.6);
+            border-color: var(--highlight);
+            box-shadow: 0 0 10px rgba(255, 85, 85, 0.3);
+        }
+        
+        button {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: block;
+            margin: 30px auto;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+        
+        button:hover {
+            background-color: var(--highlight);
+            box-shadow: 0 0 15px rgba(255, 85, 85, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        button:disabled {
+            background-color: #444;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .result-container {
+            display: none;
+            background-color: var(--darker-bg);
+            border-radius: 8px;
+            padding: 30px;
+            margin-top: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            border-top: 4px solid var(--highlight);
+            animation: fadeIn 1s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .result-title {
+            color: var(--highlight);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 0 0 8px rgba(255, 85, 85, 0.3);
+        }
+        
+        .result-subtitle {
+            font-size: 1.2rem;
+            color: #aaa;
+            margin-bottom: 30px;
+            text-align: center;
+            font-style: italic;
+        }
+        
+        .result-content {
+            margin-bottom: 30px;
+        }
+        
+        .dark-traits {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+        
+        .trait {
+            text-align: center;
+            flex: 1;
+            padding: 15px;
+            background-color: rgba(139, 0, 0, 0.2);
+            border-radius: 5px;
+            margin: 0 5px;
+            transition: all 0.3s;
+        }
+        
+        .trait:hover {
+            background-color: rgba(139, 0, 0, 0.4);
+            transform: translateY(-5px);
+        }
+        
+        .trait-name {
+            font-weight: bold;
+            color: var(--highlight);
+            margin-bottom: 10px;
+        }
+        
+        .trait-value {
+            height: 10px;
+            background-color: #333;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+        
+        .trait-fill {
+            height: 100%;
+            background-color: var(--highlight);
+            border-radius: 5px;
+            transition: width 1s ease-out;
+        }
+        
+        .mbti-ranking {
+            margin-top: 40px;
+        }
+        
+        .ranking-title {
+            color: var(--highlight);
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--accent);
+            padding-bottom: 5px;
+        }
+        
+        .ranking-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #333;
+            transition: background-color 0.3s;
+        }
+        
+        .ranking-item:hover {
+            background-color: rgba(139, 0, 0, 0.1);
+        }
+        
+        .ranking-type {
+            font-weight: bold;
+        }
+        
+        .ranking-score {
+            color: var(--highlight);
+        }
+        
+        .progress-container {
+            width: 100%;
+            background-color: #333;
+            border-radius: 5px;
+            margin: 5px 0;
+            height: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: var(--highlight);
+            border-radius: 5px;
+            transition: width 1s ease-out;
+        }
+        
+        .dark-message {
+            font-style: italic;
+            text-align: center;
+            margin-top: 30px;
+            padding: 15px;
+            background-color: rgba(139, 0, 0, 0.1);
+            border-left: 3px solid var(--highlight);
+        }
+        
+        .restart-btn {
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .dark-traits {
+                flex-direction: column;
+            }
+            
+            .trait {
+                margin: 5px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌑 다크 MBTI 심리 테스트</h1>
+            <p class="subtitle">당신의 그림자 속에 숨겨진 진실을 밝혀드립니다...</p>
+        </header>
+        
+        <div id="test-container">
+            <!-- 질문들이 여기에 동적으로 로드됩니다 -->
+        </div>
+        
+        <button id="submit-btn" disabled>결과 보기</button>
+        
+        <div id="result-container" class="result-container">
+            <!-- 결과가 여기에 표시됩니다 -->
+        </div>
+    </div>
+
+    <script>
+        // 테스트 질문 데이터
+        const questions = [
+            {
+                question: "1. 타인의 실패를 목격했을 때, 내면에서 느껴지는 첫 번째 감정은?",
+                options: [
+                    "a) 동정",
+                    "b) 무관심",
+                    "c) 흥미로운 관찰 대상",
+                    "d) 잠재적 이점 계산"
+                ],
+                scores: [0, 1, 2, 2]
+            },
+            {
+                question: "2. 누군가의 비밀을 알게 되었을 때, 나의 본능적 반응은?",
+                options: [
+                    "a) 지키려 함",
+                    "b) 무시함",
+                    "c) 정보의 가치 평가",
+                    "d) 조종에 활용할 방법 탐색"
+                ],
+                scores: [0, 1, 2, 2]
+            },
+            {
+                question: "3. '모든 인간은 결국 자기 이익을 위해 움직인다'는 명제에 대한 생각은?",
+                options: [
+                    "a) 부정",
+                    "b) 부분적 동의",
+                    "c) 당연한 법칙",
+                    "d) '이익'의 정의에 따라 다름 (권력? 쾌락?)"
+                ],
+                scores: [0, 1, 2, 2]
+            },
+            {
+                question: "4. 사회적 규범을 어기는 실험에 참여한다면, 어느 정도까지 행동할 수 있는가?",
+                options: [
+                    "a) 법적 한계 내",
+                    "b) 도덕적 불편감 무시",
+                    "c) 타인의 고통도 변수일 뿐",
+                    "d) 규범 자체를 재정의할 의향"
+                ],
+                scores: [0, 1, 2, 2]
+            },
+            {
+                question: "5. 장기적인 복수를 계획한 경험이 있는가?",
+                options: [
+                    "a) 없음",
+                    "b) 상상만 함",
+                    "c) 체계적으로 실행함",
+                    "d) 복수보다 지배 선호"
+                ],
+                scores: [0, 1, 2, 2]
+            },
+            {
+                question: "6. 타인의 두려움을 이용해 목적을 달성한 적이 있는가?",
+                options: [
+                    "a) 없음",
+                    "b) 우연히 발생",
+                    "c) 전략적 도구로 사용",
+                    "d) 두려움 자체가 목적일 때도 있음"
+                ],
+                scores: [0, 1, 2, 2]
+            },
+            {
+                question: "7. '악마의 편에 서서 승리하는 것'에 대한 태도는?",
+                options: [
+                    "a) 거부감",
+                    "b) 상황에 따라",
+                    "c) 도구적 합리성",
+                    "d) 악마의 정의가 문제 (권력은 중립적)"
+                ],
+                scores: [0, 1, 2, 2]
+            },
+            {
+                question: "8. 자신의 정체성을 가장 효과적으로 숨길 수 있는 상황은?",
+                options: [
+                    "a) 연기 불가능",
+                    "b) 부분적 위장",
+                    "c) 완전한 변장보다 역설적 진실 혼란",
+                    "d) 정체성 자체가 유동적"
+                ],
+                scores: [0, 1, 2, 2]
+            },
+            {
+                question: "9. '약자를 보호해야 한다'는 주장에 대한 내면의 반응은?",
+                options: [
+                    "a) 동의",
+                    "b) 조건부 동의",
+                    "c) 약자의 정의가 먼저 필요 (정신적 약자도 포함?)",
+                    "d) 보호보다 '통제'가 적합한 표현"
+                ],
+                scores: [0, 1, 2, 2]
+            },
+            {
+                question: "10. 지금까지 한 말 중 가장 치졸한 거짓말은?",
+                options: [
+                    "a) 기억 안 남",
+                    "b) 사소한 거짓말",
+                    "c) 진실을 의심하지 않도록 반진실 구성",
+                    "d) 거짓말이 아닌 현실 재구성"
+                ],
+                scores: [0, 1, 2, 2]
+            },
+            {
+                question: "11. 타인의 신뢰를 가장 빨리 무너뜨리는 방법은?",
+                options: [
+                    "a) 직접적 배신",
+                    "b) 서서히 의심 심기",
+                    "c) 그들이 스스로를 의심하게 유도",
+                    "d) 신뢰의 개념 자체를 붕괴시킴"
+                ],
+                scores: [0, 1, 2, 2]
+            },
+            {
+                question: "12. '모든 인간은 가격이 있다'는 명제에 대한 입장은?",
+                options: [
+                    "a) 부정",
+                    "b) 일부 동의",
+                    "c) 가격이 비화폐적일 뿐 (존엄? 양심?)",
+                    "d) '구매자'가 결정하는 문제"
+                ],
+                scores: [0, 1, 2, 2]
+            },
+            {
+                question: "13. 권력의 본질에 대한 생각은?",
+                options: [
+                    "a) 책임",
+                    "b) 양날의 검",
+                    "c) 존재의 확장",
+                    "d) 환상이지만 유일한 현실"
+                ],
+                scores: [0, 1, 2, 2]
+            },
+            {
+                question: "14. 내가 가장 흥미롭게 관찰하는 인간 유형은?",
+                options: [
+                    "a) 선한 사람",
+                    "b) 복잡한 사람",
+                    "c) 자기 파괴적 성향의 지능형",
+                    "d) 나를 위협할 수 있는 잠재력 있는 자"
+                ],
+                scores: [0, 1, 2, 2]
+            },
+            {
+                question: "15. '악'을 정의한다면?",
+                options: [
+                    "a) 고의적 피해",
+                    "b) 무지",
+                    "c) 체계의 불완전성을 이용하는 행위",
+                    "d) 정의 불가 (악은 상대적 도구)"
+                ],
+                scores: [0, 1, 2, 2]
+            }
+        ];
+
+        // 다크 MBTI 유형 데이터
+        const darkMbtiTypes = [
+            {
+                type: "INTJ-D",
+                name: "암흑 군주",
+                description: "모든 것은 내 게임의 피스일 뿐. 인간 관계를 확률 모델로 분석하며 감정 대신 최적화 알고리즘을 적용합니다.",
+                traits: {
+                    "마키아벨리안": 90,
+                    "나르시시즘": 70,
+                    "반사회성": 60
+                },
+                danger: 4.5
+            },
+            {
+                type: "INTP-P",
+                name: "실험적 소시오패스",
+                description: "인간은 움직이는 실험체다. 도덕적 장벽이 연구 대상으로만 기능하며 사회적 규범을 시뮬레이션으로 인식합니다.",
+                traits: {
+                    "마키아벨리안": 80,
+                    "나르시시즘": 50,
+                    "반사회성": 70
+                },
+                danger: 4
+            },
+            {
+                type: "ENTJ-M",
+                name: "마키아벨리안 제왕",
+                description: "목적은 수단을 정당화한다. 권력 획득을 위한 정신적 학살을 용인하며 협력을 일시적 전술적 동맹으로 봅니다.",
+                traits: {
+                    "마키아벨리안": 95,
+                    "나르시시즘": 85,
+                    "반사회성": 75
+                },
+                danger: 5
+            },
+            {
+                type: "ENTP-C",
+                name: "카오스 메이커",
+                description: "무너진 질서 속에서 춤추는 자. 사회적 혼란을 오락으로 추구하며 가스라이팅을 예술 수준으로 실행합니다.",
+                traits: {
+                    "마키아벨리안": 85,
+                    "나르시시즘": 75,
+                    "반사회성": 60
+                },
+                danger: 3.5
+            },
+            {
+                type: "INFJ-N",
+                name: "어둠의 구원자",
+                description: "너의 어둠은 내가 먹이겠다. 타인의 트라우마를 정신적 지배로 연결하며 구원자 콤플렉스가 착취로 변질됩니다.",
+                traits: {
+                    "마키아벨리안": 70,
+                    "나르시시즘": 80,
+                    "반사회성": 50
+                },
+                danger: 3.5
+            },
+            {
+                type: "INFP-V",
+                name: "순수한 복수귀",
+                description: "상처받은 이상주의자는 가장 위험하다. 신념 배반 시 잔인한 응징을 하며 감정적 상처를 창조적 파괴로 전환합니다.",
+                traits: {
+                    "마키아벨리안": 60,
+                    "나르시시즘": 65,
+                    "반사회성": 55
+                },
+                danger: 3
+            },
+            {
+                type: "ENFJ-C",
+                name: "컬트 리더",
+                description: "내가 정의다. 카리스마를 정신적 종속 도구로 사용하며 추종자의 자아 해체를 유도합니다.",
+                traits: {
+                    "마키아벨리안": 75,
+                    "나르시시즘": 90,
+                    "반사회성": 65
+                },
+                danger: 4
+            },
+            {
+                type: "ENFP-M",
+                name: "매니퓰레이터",
+                description: "사랑은 가장 완벽한 속임수다. 낙천적 이미지로 의존성 조성하며 감정적 착취를 게임처럼 실행합니다.",
+                traits: {
+                    "마키아벨리안": 70,
+                    "나르시시즘": 80,
+                    "반사회성": 50
+                },
+                danger: 2.5
+            },
+            {
+                type: "ISTJ-E",
+                name: "엄격한 재판관",
+                description: "규칙을 어긴 자는 소멸되어야 한다. 완벽주의가 잔인한 응보로 연결되며 도덕적 청산에 집착합니다.",
+                traits: {
+                    "마키아벨리안": 65,
+                    "나르시시즘": 60,
+                    "반사회성": 70
+                },
+                danger: 3
+            },
+            {
+                type: "ISFJ-S",
+                name: "침묵의 감시자",
+                description: "보호는 통제의 다른 이름이다. 희생을 정신적 족쇄로 전환하며 의존적 관계에 집착합니다.",
+                traits: {
+                    "마키아벨리안": 50,
+                    "나르시시즘": 60,
+                    "반사회성": 40
+                },
+                danger: 2
+            },
+            {
+                type: "ESTJ-T",
+                name: "철권 통치자",
+                description: "저항은 비효율이다. 효율성을 명분으로 인권을 무시하며 권위주의적 폭력을 정당화합니다.",
+                traits: {
+                    "마키아벨리안": 80,
+                    "나르시시즘": 75,
+                    "반사회성": 70
+                },
+                danger: 4
+            },
+            {
+                type: "ESFJ-P",
+                name: "인기 조작자",
+                description: "너의 사랑은 내가 만든 환상이다. 사회적 지위를 위해 가면을 사용하며 허위 정체성에 능숙합니다.",
+                traits: {
+                    "마키아벨리안": 65,
+                    "나르시시즘": 85,
+                    "반사회성": 50
+                },
+                danger: 2.5
+            },
+            {
+                type: "ISTP-K",
+                name: "냉혈한 킬러",
+                description: "살아있는 기계는 감정이 필요 없다. 위기 상황에서 반사회적 행동 가능성이 높으며 물리적 폭력을 도구로 인식합니다.",
+                traits: {
+                    "마키아벨리안": 75,
+                    "나르시시즘": 60,
+                    "반사회성": 85
+                },
+                danger: 4
+            },
+            {
+                type: "ISFP-R",
+                name: "낭만적 파괴자",
+                description: "아름다운 파괴는 예술이다. 자기 파괴를 미학으로 승화시키며 충동적 범죄 가능성이 있습니다.",
+                traits: {
+                    "마키아벨리안": 55,
+                    "나르시시즘": 70,
+                    "반사회성": 60
+                },
+                danger: 2.5
+            },
+            {
+                type: "ESTP-D",
+                name: "도박사",
+                description: "인생은 원샷 원킬 게임. 위험을 중독성으로 인식하며 법적 회색지대를 탐험합니다.",
+                traits: {
+                    "마키아벨리안": 70,
+                    "나르시시즘": 75,
+                    "반사회성": 65
+                },
+                danger: 3
+            },
+            {
+                type: "ESFP-V",
+                name: "허영의 괴물",
+                description: "관심은 나의 산소다. 관심 갈증이 도덕적 타락으로 연결되며 과시적 범죄 가능성이 있습니다.",
+                traits: {
+                    "마키아벨리안": 60,
+                    "나르시시즘": 90,
+                    "反사회性": 55
+                },
+                danger: 2
+            }
+        ];
+
+        // 변수 초기화
+        let currentQuestion = 0;
+        let answers = [];
+        const testContainer = document.getElementById('test-container');
+        const submitBtn = document.getElementById('submit-btn');
+        const resultContainer = document.getElementById('result-container');
+
+        // 테스트 렌더링
+        function renderQuestion() {
+            testContainer.innerHTML = '';
+            
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question-container';
+            
+            const questionText = document.createElement('div');
+            questionText.className = 'question';
+            questionText.textContent = questions[currentQuestion].question;
+            questionDiv.appendChild(questionText);
+            
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'options';
+            
+            questions[currentQuestion].options.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+                optionDiv.textContent = option;
+                optionDiv.dataset.index = index;
+                
+                optionDiv.addEventListener('click', function() {
+                    // 기존 선택 해제
+                    document.querySelectorAll('.option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    
+                    // 현재 선택 활성화
+                    this.classList.add('selected');
+                    
+                    // 답변 저장
+                    answers[currentQuestion] = parseInt(this.dataset.index);
+                    
+                    // 다음 버튼 활성화 확인
+                    checkAllAnswered();
+                });
+                
+                optionsDiv.appendChild(optionDiv);
+            });
+            
+            questionDiv.appendChild(optionsDiv);
+            testContainer.appendChild(questionDiv);
+            
+            // 진행 상태 표시
+            const progress = document.createElement('div');
+            progress.style.marginTop = '20px';
+            progress.style.color = '#aaa';
+            progress.textContent = `진행 상황: ${currentQuestion + 1}/${questions.length}`;
+            testContainer.appendChild(progress);
+            
+            // 이전/다음 버튼 (첫 질문 제외)
+            if (currentQuestion > 0) {
+                const prevBtn = document.createElement('button');
+                prevBtn.textContent = '이전 질문';
+                prevBtn.style.marginRight = '10px';
+                prevBtn.style.display = 'inline-block';
+                prevBtn.addEventListener('click', function() {
+                    currentQuestion--;
+                    renderQuestion();
+                });
+                testContainer.appendChild(prevBtn);
+            }
+            
+            if (currentQuestion < questions.length - 1) {
+                const nextBtn = document.createElement('button');
+                nextBtn.textContent = '다음 질문';
+                nextBtn.style.display = 'inline-block';
+                nextBtn.addEventListener('click', function() {
+                    if (answers[currentQuestion] !== undefined) {
+                        currentQuestion++;
+                        renderQuestion();
+                    } else {
+                        alert('옵션을 선택해주세요.');
+                    }
+                });
+                testContainer.appendChild(nextBtn);
+            }
+        }
+
+        // 모든 질문에 답변했는지 확인
+        function checkAllAnswered() {
+            const allAnswered = answers.length === questions.length && answers.every(answer => answer !== undefined);
+            submitBtn.disabled = !allAnswered;
+        }
+
+        // 결과 계산
+        function calculateResult() {
+            let totalScore = 0;
+            
+            // 각 답변의 점수 합산
+            answers.forEach((answerIndex, questionIndex) => {
+                totalScore += questions[questionIndex].scores[answerIndex];
+            });
+            
+            // 최대 점수 대비 백분율
+            const maxScore = questions.length * 2;
+            const percentage = (totalScore / maxScore) * 100;
+            
+            // 다크 트라이어드 점수 계산
+            const traitScores = {
+                "마키아벨리안": Math.min(100, Math.floor(percentage * 0.9)),
+                "나르시시즘": Math.min(100, Math.floor(percentage * 0.7)),
+                "반사회성": Math.min(100, Math.floor(percentage * 0.6))
+            };
+            
+            // MBTI 유형 매칭 (가상의 알고리즘 - 실제로는 더 복잡한 로직 필요)
+            const matchedTypes = darkMbtiTypes.map(type => {
+                let similarity = 0;
+                
+                // 각 트레이트 유사도 계산
+                similarity += 100 - Math.abs(traitScores["마키아벨리안"] - type.traits["마키아벨리안"]);
+                similarity += 100 - Math.abs(traitScores["나르시시즘"] - type.traits["나르시시즘"]);
+                similarity += 100 - Math.abs(traitScores["반사회성"] - type.traits["반사회성"]);
+                
+                return {
+                    type: type.type,
+                    name: type.name,
+                    description: type.description,
+                    danger: type.danger,
+                    similarity: similarity / 3
+                };
+            });
+            
+            // 유사도 순으로 정렬
+            matchedTypes.sort((a, b) => b.similarity - a.similarity);
+            
+            return {
+                totalScore: totalScore,
+                maxScore: maxScore,
+                percentage: percentage,
+                traits: traitScores,
+                matchedTypes: matchedTypes,
+                topType: matchedTypes[0]
+            };
+        }
+
+        // 결과 표시
+        function showResult() {
+            const result = calculateResult();
+            
+            resultContainer.innerHTML = `
+                <div class="result-title">당신의 다크 MBTI: ${result.topType.type} (${result.topType.name})</div>
+                <div class="result-subtitle">"${result.topType.description}"</div>
+                
+                <div class="result-content">
+                    <p>당신의 다크 트라이어드 점수는 다음과 같습니다:</p>
+                    
+                    <div class="dark-traits">
+                        <div class="trait">
+                            <div class="trait-name">마키아벨리안</div>
+                            <div class="trait-value">
+                                <div class="trait-fill" style="width: ${result.traits["마키아벨리안"]}%"></div>
+                            </div>
+                            <div>${result.traits["마키아벨리안"]}%</div>
+                        </div>
+                        
+                        <div class="trait">
+                            <div class="trait-name">나르시시즘</div>
+                            <div class="trait-value">
+                                <div class="trait-fill" style="width: ${result.traits["나르시시즘"]}%"></div>
+                            </div>
+                            <div>${result.traits["나르시시즘"]}%</div>
+                        </div>
+                        
+                        <div class="trait">
+                            <div class="trait-name">반사회성</div>
+                            <div class="trait-value">
+                                <div class="trait-fill" style="width: ${result.traits["반사회성"]}%"></div>
+                            </div>
+                            <div>${result.traits["반사회성"]}%</div>
+                        </div>
+                    </div>
+                    
+                    <div class="danger-level" style="margin-top: 30px;">
+                        <div style="margin-bottom: 10px;">위험도: ${'🌑'.repeat(Math.floor(result.topType.danger))}${'⚪'.repeat(5 - Math.floor(result.topType.danger))} (${result.topType.danger}/5)</div>
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: ${result.topType.danger * 20}%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mbti-ranking">
+                    <div class="ranking-title">다크 MBTI 유형 매칭 순위</div>
+                    
+                    ${result.matchedTypes.slice(0, 5).map((type, index) => `
+                        <div class="ranking-item">
+                            <div>
+                                <span class="ranking-type">${type.type} (${type.name})</span>
+                                <span class="ranking-score">${type.similarity.toFixed(1)}%</span>
+                            </div>
+                            <div class="progress-container">
+                                <div class="progress-bar" style="width: ${type.similarity}%"></div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+                
+                <div class="dark-message">
+                    "악은 태어나는 것이 아니라 각성하는 것이다. 이 결과는 당신의 잠재적 가능성을 보여줄 뿐입니다."
+                </div>
+                
+                <button class="restart-btn" onclick="location.reload()">테스트 다시하기</button>
+            `;
+            
+            resultContainer.style.display = 'block';
+            testContainer.style.display = 'none';
+            submitBtn.style.display = 'none';
+            
+            // 애니메이션 트리거
+            setTimeout(() => {
+                document.querySelectorAll('.trait-fill, .progress-bar').forEach(bar => {
+                    bar.style.width = bar.style.width;
+                });
+            }, 100);
+        }
+
+        // 이벤트 리스너
+        submitBtn.addEventListener('click', showResult);
+
+        // 초기 렌더링
+        renderQuestion();
+    </script>
+</body>
+</html>
